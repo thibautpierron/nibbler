@@ -6,42 +6,48 @@
 #    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/21 11:32:23 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/19 10:59:09 by tpierron         ###   ########.fr        #
+#    Updated: 2017/10/19 11:31:30 by tpierron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all clean fclean re
 
 NAME = Nibbler
+LIB1_NAME = MlxDisplay.so
 
 CC = clang++
-SRC =	main.cpp
+MAIN_SRC = main.cpp
+LIB1_SRC = mlxDL/MlxDisplay.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 OBJ_PATH = ./obj/
-OBJ_NAME = $(SRC:.cpp=.o)
+OBJ_NAME = $(MAIN_SRC:.cpp=.o)
 
-SDL = -L/Users/tpierron/.brew/lib -lSDL2
-MLBX = -L/usr/lib -lmlx
-SDL_PATH = -I/Users/tpierron/.brew/include/SDL2
-
+MLX = -L/usr/lib -lmlx
 OPENGL = -framework OpenGl -framework AppKit
+
+#SDL = -L/Users/tpierron/.brew/lib -lSDL2
+#SDL_PATH = -I/Users/tpierron/.brew/include/SDL2
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
-all: $(NAME)
+all: lib1 $(NAME)
+
 $(OBJ_PATH)%.o: %.cpp
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CC) $(CFLAGS) -o $@ -c $(SDL_PATH) $< -std=c++11
+	$(CC) $(CFLAGS) -o $@ -c $< -std=c++11
 
 $(NAME): $(OBJ)
-	$(CC) $(SDL) $(MLBX) $(OPENGL) $(CFLAGS) -o $@ $^
+	$(CC) $(SDL) $(CFLAGS) -o $@ $^
+
+lib1:
+	$(CC) -shared -fPIC -o $(LIB1_NAME) $(LIB1_SRC) $(MLX) $(OPENGL) $(CFLAGS)
 
 clean:
 	rm -rf $(OBJ_PATH)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(LIB1_NAME)
 
 re: fclean all
 

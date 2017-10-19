@@ -6,14 +6,14 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 16:27:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 10:55:22 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 11:28:12 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLXDISPLAY_HPP
 # define MLXDISPLAY_HPP
 
-# include "IgraphLib.hpp"
+# include "../shared/IgraphLib.hpp"
 
 # include <iostream>
 # include <vector>

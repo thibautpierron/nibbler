@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:10:34 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 09:38:29 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 11:29:36 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <iostream>
 # include <dlfcn.h>
-# include "IgraphLib.hpp"
-# include "MlxDisplay.hpp"
+# include "shared/IgraphLib.hpp"
+# include "mlxDL/MlxDisplay.hpp"
 
 #endif
