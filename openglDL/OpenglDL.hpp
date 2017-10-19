@@ -1,56 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   MlxDisplay.hpp                                     :+:      :+:    :+:   */
+/*   OpenglDL.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/18 16:27:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 11:28:12 by tpierron         ###   ########.fr       */
+/*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
+/*   Updated: 2017/10/19 14:10:56 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLXDISPLAY_HPP
-# define MLXDISPLAY_HPP
+#ifndef OPENGLDL_HPP
+# define OPENGLDL_HPP
 
 # include "../shared/IgraphLib.hpp"
 
 # include <iostream>
 # include <vector>
 
-extern "C" {
-	# include <mlx.h>
-}
+# include <OpenGL/gl3.h>
+# include <SDL2/SDL.h>
 
-
-class MlxDisplay : public IgraphLib {
+class OpenglDL : public IgraphLib {
 	public:
-		MlxDisplay(int, int);
-		virtual ~MlxDisplay();
+		OpenglDL(int, int);
+		virtual ~OpenglDL();
 
-		void			display(std::vector<Vec2> food, std::vector<Vec2> snake);
-		// virtual Action::Enum	event();
-		// virtual void			destroyContext();
+		void					display(std::vector<Vec2> food, std::vector<Vec2> snake);
+		virtual Action::Enum	eventManager();
+
 	private:
-		MlxDisplay();
+		OpenglDL();
+		void	initSDL();
+		void	initGL();
 
 		int	mapSizeX;
 		int mapSizeY;
 
-		void *mlx;
-		void *win;
-		void *image;
-
-		int	bit;
-		int size;
-		int end;
-		char *data;
+		SDL_Event		events;
+		SDL_GLContext	ctx;
+		SDL_Window		*win;
 };
 
 extern "C" {
-	// # include <mlx.h>
-	MlxDisplay *initContext(int, int);
-	void		destroyContext(MlxDisplay *);
+	OpenglDL	*initContext(int, int);
+	void		destroyContext(OpenglDL *);
 }
 
 #endif
