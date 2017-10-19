@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 15:38:33 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 09:40:30 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 10:51:09 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 struct Vec2 {
 	int x;
 	int y;
-
-
 };
 
 class IgraphLib {

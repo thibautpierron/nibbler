@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 16:54:25 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 09:41:22 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 10:13:20 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ void	MlxDisplay::display(std::vector<Vec2> food, std::vector<Vec2> snake) {
 
 	mlx_put_image_to_window(mlx, win, image, 0, 0);
 	mlx_loop(mlx);
+}
+
+MlxDisplay	*initContext(int mapSizeX, int mapSizeY) {
+	return new MlxDisplay(mapSizeX, mapSizeY);
+}
+
+void		destroyContext(MlxDisplay *instance) {
+	delete instance;
 }

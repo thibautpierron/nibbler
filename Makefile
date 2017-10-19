@@ -6,7 +6,7 @@
 #    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/21 11:32:23 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/18 17:31:25 by tpierron         ###   ########.fr        #
+#    Updated: 2017/10/19 10:59:09 by tpierron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@
 NAME = Nibbler
 
 CC = clang++
-SRC =	main.cpp \
-		MlxDisplay.cpp
+SRC =	main.cpp
 
 CFLAGS = -Wall -Wextra -Werror
 OBJ_PATH = ./obj/

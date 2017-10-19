@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 16:27:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 09:40:14 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 10:55:22 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ extern "C" {
 class MlxDisplay : public IgraphLib {
 	public:
 		MlxDisplay(int, int);
-		~MlxDisplay();
+		virtual ~MlxDisplay();
 
-		virtual void			display(std::vector<Vec2> food, std::vector<Vec2> snake);
+		void			display(std::vector<Vec2> food, std::vector<Vec2> snake);
 		// virtual Action::Enum	event();
 		// virtual void			destroyContext();
 	private:
@@ -46,5 +46,11 @@ class MlxDisplay : public IgraphLib {
 		int end;
 		char *data;
 };
+
+extern "C" {
+	// # include <mlx.h>
+	MlxDisplay *initContext(int, int);
+	void		destroyContext(MlxDisplay *);
+}
 
 #endif
