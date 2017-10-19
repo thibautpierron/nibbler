@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 14:10:56 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 16:36:53 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define OPENGLDL_HPP
 
 # include "../shared/IgraphLib.hpp"
+# include "./Shader.class.hpp"
+# include "./model/Model.class.hpp"
+
 
 # include <iostream>
 # include <vector>
@@ -37,9 +40,16 @@ class OpenglDL : public IgraphLib {
 		int	mapSizeX;
 		int mapSizeY;
 
+
+
 		SDL_Event		events;
 		SDL_GLContext	ctx;
 		SDL_Window		*win;
+
+		Shader			*shader;
+		GLuint			vao;
+		GLuint			vbo;
+		Model			*model;
 };
 
 extern "C" {

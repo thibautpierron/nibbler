@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 14:18:49 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 16:48:59 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ OpenglDL::OpenglDL(int mapSizeX, int mapSizeY) :
 	mapSizeX(mapSizeX), mapSizeY(mapSizeY) {
         
 		initSDL();
-		initGL();
-		
-}
+        initGL();
+        
+        shader = new Shader("./openglDL/shaders/static_model_instanced.glvs",
+                            "./openglDL/shaders/simple_diffuse.glfs");
 
+        model = new Model("./openglDL/body.obj", false);
+        
+}
 
 OpenglDL::~OpenglDL() {
 	SDL_GL_DeleteContext(ctx);
@@ -31,10 +35,21 @@ OpenglDL::~OpenglDL() {
 void	OpenglDL::display(std::vector<Vec2> food, std::vector<Vec2> snake) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Vec2 v;
+	Vec2 v(0,0);
 	food.push_back(v);
 	snake.push_back(v);
 
+	
+    glm::mat4 camera = glm::lookAt(
+        glm::vec3(0.f, 0.f, 5.f),
+        glm::vec3(0.f, 0.f, 0.f),
+        glm::vec3(0.f, 0.f, 1.f)
+    );
+    
+    shader->use();
+    shader->setCamera(camera);
+    shader->setView();
+    model->draw(shader, snake.size());
 
 	SDL_GL_SwapWindow(win);
 }
@@ -65,7 +80,7 @@ void	OpenglDL::initGL() {
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-	glFrontFace(GL_CCW);	
+    glFrontFace(GL_CCW);
 }
 
 Action::Enum    OpenglDL::eventManager() {

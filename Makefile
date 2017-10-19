@@ -6,7 +6,7 @@
 #    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/21 11:32:23 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/19 13:42:33 by tpierron         ###   ########.fr        #
+#    Updated: 2017/10/19 16:43:53 by tpierron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,18 +17,28 @@ LIB1_NAME = OpenglDL.so
 
 CC = clang++
 MAIN_SRC = main.cpp
-#LIB1_SRC = mlxDL/MlxDisplay.cpp
-LIB1_SRC = openglDL/OpenglDL.cpp
+
+LIB1_SRC = openglDL/OpenglDL.cpp \
+			openglDL/Shader.class.cpp \
+			openglDL/model/Joint.class.cpp \
+			openglDL/model/Mesh.class.cpp \
+			openglDL/model/Model.class.cpp \
+
+
+# DL STB_IMAGE !!!!!!!!!!!!!!!!!!!!!!
 
 CFLAGS = -Wall -Wextra -Werror
 OBJ_PATH = ./obj/
 OBJ_NAME = $(MAIN_SRC:.cpp=.o)
 
-#MLX = -L/usr/lib -lmlx
 OPENGL = -framework OpenGl -framework AppKit
 
 SDL = -L/Users/tpierron/.brew/lib -lSDL2
 SDL_PATH = -I/Users/tpierron/.brew/include/SDL2
+GLM = -L/Users/tpierron/.brew/lib -lglm
+GLM_PATH = -I/Users/tpierron/.brew/include/glm
+ASS = -L/Users/tpierron/.brew/lib -lassimp
+ASS_PATH = -I/Users/tpierron/.brew/include/
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
@@ -41,11 +51,8 @@ $(OBJ_PATH)%.o: %.cpp
 $(NAME): $(OBJ)
 	$(CC) $(SDL) $(CFLAGS) -o $@ $^
 
-# lib1:
-# 	$(CC) -shared -fPIC -o $(LIB1_NAME) $(LIB1_SRC) $(MLX) $(OPENGL) $(CFLAGS)
-
 lib1:
-	$(CC) -shared -fPIC -o $(LIB1_NAME) $(LIB1_SRC) $(SDL) $(SDL_PATH) $(OPENGL) $(CFLAGS)
+	$(CC) -shared -fPIC -o $(LIB1_NAME) $(LIB1_SRC) $(SDL) $(SDL_PATH) $(ASS) $(ASS_PATH)  $(GLM_PATH) $(OPENGL) $(CFLAGS) -std=c++11
 
 clean:
 	rm -rf $(OBJ_PATH)
