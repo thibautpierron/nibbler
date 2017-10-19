@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 16:36:53 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/19 17:49:15 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ class OpenglDL : public IgraphLib {
 
 		int	mapSizeX;
 		int mapSizeY;
-
-
 
 		SDL_Event		events;
 		SDL_GLContext	ctx;
