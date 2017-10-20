@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 11:51:20 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:22:33 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ OpenglDL::~OpenglDL() {
 	return;
 }
 
-void	OpenglDL::display(std::vector<Vec2> food, std::vector<Vec2> snake) {
+void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->food = food;

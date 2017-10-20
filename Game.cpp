@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 13:34:04 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:30:26 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 Game::Game(int mapSizeX, int mapSizeY) : mapSizeX(mapSizeX), mapSizeY(mapSizeY){
 	initSnake();
-	initFood();
+	generateFood();
+	generateFood();
 
-	gameSpeed = 6.f / 60.f;
-    gameTick = 0.f;
+	gameSpeed = 2.f / 60.f;
+	gameTick = 0.f;
+	direction = SOUTH;
+	action = Action::NONE;
+	foodContactFlag = false;
 }
 
 Game::~Game() {};
@@ -29,7 +33,7 @@ void    Game::initSnake() {
     snake.push_back(Vec2(3, 6));
 }
 
-void    Game::initFood() {
+void    Game::generateFood() {
 	int nX = snake[0].x;
 	int nY = snake[0].y;
 	bool flag = true;
@@ -48,18 +52,86 @@ void    Game::initFood() {
 }
 
 void	Game::compute(Action::Enum action) {
-	if (action)
-		action = Action::NONE;
+	if(action == Action::LEFT || action == Action::RIGHT)
+		this->action = action;
+
+	if(gameTick >= 1.f) {
+		getNextMoveDirection(this->action);
+		moveSnake();
+		checkCollisions();
+		this->action = Action::NONE;
+		gameTick = 0.f;
+	}
+	gameTick += gameSpeed;
 }
 
-bool	Game::checkCollision() {
+void	Game::checkCollisions() {
+	if (checkWallCollision())
+		std::cout << "WALL COLLISION" << std::endl;
+	if (checkSnakeCollision())
+		std::cout << "SNAKE COLLISION" << std::endl;
+	if (checkFoodCollision()) {
+		foodContactFlag = true;
+		generateFood();
+	}
+}
+
+bool		Game::checkFoodCollision() {
+	for (unsigned int i = 0; i < food.size(); i++) {
+		if (snake[0].x == food[i].x && snake[0].y == food[i].y) {
+			food.erase(food.begin() + i);
+			return true;
+		}
+	}
 	return false;
+}
+
+bool		Game::checkWallCollision() {
+	if (snake[0].x < 0 || snake[0].x >= mapSizeX || 
+		snake[0].y < 0 || snake[0].y >= mapSizeY)
+		return true;
+	return false;
+}
+
+bool		Game::checkSnakeCollision() {
+	for (unsigned int i = 1; i < snake.size(); i++) {
+		if (snake[0].x == snake[i].x && snake[0].y == snake[i].y)
+			return true;
+	}
+	return false;
+}
+
+
+void	Game::getNextMoveDirection(Action::Enum action) {
+	if(action == Action::LEFT)
+		direction =  static_cast<Direction>((direction - 1) % 4);
+	else if(action == Action::RIGHT)
+		direction =  static_cast<Direction>((direction + 1) % 4);
+
+	if (direction < 0)
+		direction = WEST;
+}
+
+void		Game::moveSnake() {
+	int nextHeadX= snake[0].x;
+	int nextHeadY= snake[0].y;
+	switch (direction) {
+		case NORTH: nextHeadY++; break;
+		case SOUTH: nextHeadY--; break;
+		case EAST: nextHeadX++; break;
+		case WEST: nextHeadX--; break;
+	}
+	snake.push_front(Vec2(nextHeadX, nextHeadY));
+	if (!foodContactFlag)
+		snake.pop_back();
+	else
+		foodContactFlag = false;
 }
 
 std::vector<Vec2> 		Game::getFood() const {
 	return food;
 }
 
-std::vector<Vec2> 		Game::getSnake() const {
+std::deque<Vec2> 		Game::getSnake() const {
 	return snake;
 }

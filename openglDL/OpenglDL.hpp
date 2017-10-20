@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 11:29:37 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 14:24:31 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # include <iostream>
 # include <vector>
+# include <deque>
 
 # include <OpenGL/gl3.h>
 # include <SDL2/SDL.h>
@@ -29,7 +30,7 @@ class OpenglDL : public IgraphLib {
 		OpenglDL(int, int);
 		virtual ~OpenglDL();
 
-		void					display(std::vector<Vec2> food, std::vector<Vec2> snake);
+		void					display(std::vector<Vec2> food, std::deque<Vec2> snake);
 		virtual Action::Enum	eventManager();
 
 	private:
@@ -50,7 +51,7 @@ class OpenglDL : public IgraphLib {
 		int mapSizeY;
 
 		std::vector<Vec2> food;
-		std::vector<Vec2> snake;
+		std::deque<Vec2> snake;
 		std::vector<Vec2> scenery;
 
 		SDL_Event		events;
