@@ -144,7 +144,7 @@ void	Mesh::setInstanceBuffer(std::vector<glm::mat4> const & data) {
 	glVertexAttribDivisor(8, 1); 
 	glBindVertexArray(0);
 	
-	// glDeleteBuffers(1, &this->ibo);
+	glDeleteBuffers(1, &this->ibo);
 }
 
 void	Mesh::draw(Shader *shader, bool animated, unsigned int instanceCount) {

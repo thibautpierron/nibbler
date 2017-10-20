@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 17:49:15 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 11:29:37 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,22 @@ class OpenglDL : public IgraphLib {
 		OpenglDL();
 		void	initSDL();
 		void	initGL();
+		void	initScenery();
+
+		void	drawBody();
+		void	drawHead();
+		void	drawFood();
+		void	drawScenery();
+
+		void	setCamera();
+		float	findHeadOrientation() const;
 
 		int	mapSizeX;
 		int mapSizeY;
+
+		std::vector<Vec2> food;
+		std::vector<Vec2> snake;
+		std::vector<Vec2> scenery;
 
 		SDL_Event		events;
 		SDL_GLContext	ctx;
@@ -47,7 +60,10 @@ class OpenglDL : public IgraphLib {
 		Shader			*shader;
 		GLuint			vao;
 		GLuint			vbo;
-		Model			*model;
+		Model			*headModel;
+		Model			*bodyModel;
+		Model			*foodModel;
+		Model			*sceneryModel;
 };
 
 extern "C" {

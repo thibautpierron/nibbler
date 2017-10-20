@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 17:52:42 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 11:48:07 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,51 @@ OpenglDL::OpenglDL(int mapSizeX, int mapSizeY) :
         
 		initSDL();
         initGL();
+        initScenery();
         
         shader = new Shader("./openglDL/shaders/static_model_instanced.glvs",
                             "./openglDL/shaders/simple_diffuse.glfs");
 
-        model = new Model("./openglDL/body.obj", false);
-        
+        headModel = new Model("./openglDL/head.obj", false);
+        bodyModel = new Model("./openglDL/body.obj", false);
+        foodModel = new Model("./openglDL/food.obj", false);
+        sceneryModel = new Model("./openglDL/wall.obj", false);
 }
 
 OpenglDL::~OpenglDL() {
+    
+    delete shader;
+    delete headModel;
+    delete bodyModel;
+    delete foodModel;
+    delete sceneryModel;
+
 	SDL_GL_DeleteContext(ctx);
     SDL_DestroyWindow(win);
     SDL_Quit();
+
 	return;
 }
 
 void	OpenglDL::display(std::vector<Vec2> food, std::vector<Vec2> snake) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Vec2 v(0,0);
-	food.push_back(v);
-    snake.push_back(v);
+    this->food = food;
+    this->snake = snake;
 
-    // shader->use();
-	
-    // glm::mat4 camera = glm::lookAt(
-    //     glm::vec3(0.f, -4.f, 5.f),
-    //     glm::vec3(0.f, 0.f, 0.f),
-    //     glm::vec3(0.f, 0.f, 1.f)
-    // );
-    // shader->setCamera(camera);
-    // shader->setView();
+    setCamera();
+    
+    shader->use();
 
-    // std::vector<glm::mat4> data;
-    // glm::mat4 transform = glm::mat4();
-    // transform = glm::translate(transform, glm::vec3(snake[0].x + 0.5f, snake[0].y + 0.5f, 0.f));
-    // data.push_back(transform);
-    // model->setInstanceBuffer(data);
-
-    // model->draw(shader, snake.size());
+    drawHead();
+    drawBody();
+    drawFood();
+    drawScenery();
 
 	SDL_GL_SwapWindow(win);
 }
 
 void	OpenglDL::initSDL() {
-    std::cout << "initSDL" << std::endl;
     SDL_Init(SDL_INIT_VIDEO);
     
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
@@ -69,7 +69,7 @@ void	OpenglDL::initSDL() {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-    SDL_Window *win = SDL_CreateWindow("Nibbler",
+    win = SDL_CreateWindow("Nibbler",
                                         SDL_WINDOWPOS_UNDEFINED,
                                         SDL_WINDOWPOS_UNDEFINED,
                                         1024, 1024,
@@ -82,14 +82,24 @@ void	OpenglDL::initSDL() {
 }
 
 void	OpenglDL::initGL() {
-    std::cout << "initGL" << std::endl;
-    glClearColor(0.5f, 1.5f, 0.5f, 0.5f);
+    glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
     
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
+}
+
+void    OpenglDL::initScenery() {
+    for(int i = 0; i < mapSizeX; i++) {
+        scenery.push_back(Vec2(i, -1));
+        scenery.push_back(Vec2(i, mapSizeY + 1));
+    }
+    for(int i = 0; i < mapSizeY; i++) {
+        scenery.push_back(Vec2(-1, i));
+        scenery.push_back(Vec2(mapSizeX + 1, i));
+    }
 }
 
 Action::Enum    OpenglDL::eventManager() {
@@ -108,6 +118,78 @@ Action::Enum    OpenglDL::eventManager() {
         }
 	}
 	return Action::NONE;
+}
+
+void        OpenglDL::drawBody() {
+    std::vector<glm::mat4> data;
+ 
+    for (unsigned int i = 1; i < snake.size(); i++) {
+        glm::mat4 transform = glm::mat4();
+        transform = glm::translate(transform, glm::vec3(snake[i].x * 2, snake[i].y * 2, 0.f));
+        data.push_back(transform);
+    }
+    bodyModel->setInstanceBuffer(data);
+
+    bodyModel->draw(shader, snake.size() - 1);
+}
+
+void        OpenglDL::drawScenery() {
+    std::vector<glm::mat4> data;
+ 
+    for (unsigned int i = 1; i < scenery.size(); i++) {
+        glm::mat4 transform = glm::mat4();
+        transform = glm::translate(transform, glm::vec3(scenery[i].x * 2, scenery[i].y * 2, 0.f));
+        data.push_back(transform);
+    }
+    sceneryModel->setInstanceBuffer(data);
+
+    sceneryModel->draw(shader, scenery.size());
+}
+
+void        OpenglDL::drawHead() {
+    std::vector<glm::mat4> data;
+    
+    glm::mat4 transform = glm::mat4();
+    transform = glm::translate(transform, glm::vec3(snake[0].x * 2, snake[0].y * 2, 0.f));
+    transform = glm::rotate(transform, glm::radians(findHeadOrientation()), glm::vec3(0.f, 0.f, 1.f));
+    data.push_back(transform);
+    headModel->setInstanceBuffer(data);
+    
+    headModel->draw(shader, 1);
+}
+
+float       OpenglDL::findHeadOrientation() const {
+    int diffX = snake[0].x - snake[1].x;
+    int diffY = snake[0].y - snake[1].y;
+    if (diffX > 0)
+        return 0.f;
+    else if (diffX < 0)
+        return 180.f;
+    else if (diffY > 0)
+        return 90.f;
+    return 270.f;
+}
+
+void        OpenglDL::drawFood() {
+    std::vector<glm::mat4> data;
+    
+    for (unsigned int i = 0; i < food.size(); i++) {
+        glm::mat4 transform = glm::mat4();
+        transform = glm::translate(transform, glm::vec3(food[i].x * 2, food[i].y * 2, 0.f));
+        data.push_back(transform);
+    }
+    foodModel->setInstanceBuffer(data);
+    foodModel->draw(shader, food.size());
+}
+
+void        OpenglDL::setCamera() {
+    glm::mat4 camera = glm::lookAt(
+        glm::vec3(mapSizeX, -4.f, 20.f),
+        glm::vec3(5.f, 5.f, 0.f),
+        glm::vec3(0.f, 0.f, 1.f)
+    );
+    shader->setCamera(camera);
+    shader->setView();
 }
 
 OpenglDL	*initContext(int mapSizeX, int mapSizeY) {
