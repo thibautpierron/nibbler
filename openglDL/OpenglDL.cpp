@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 15:22:33 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:00:01 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,8 @@ void        OpenglDL::drawFood() {
 
 void        OpenglDL::setCamera() {
     glm::mat4 camera = glm::lookAt(
-        glm::vec3(mapSizeX, -5.f, 50.f),
-        glm::vec3(mapSizeX, mapSizeY, 0.f),
+        glm::vec3(mapSizeX, - mapSizeY / 2, mapSizeY),
+        glm::vec3(snake[0].x * 2, snake[0].y * 2, 0.f),
         glm::vec3(0.f, 0.f, 1.f)
     );
     shader->setCamera(camera);

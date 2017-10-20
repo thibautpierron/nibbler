@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 15:30:26 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 16:02:18 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ Game::Game(int mapSizeX, int mapSizeY) : mapSizeX(mapSizeX), mapSizeY(mapSizeY){
 	generateFood();
 	generateFood();
 
-	gameSpeed = 2.f / 60.f;
+	gameSpeed = 6.f / 60.f;
 	gameTick = 0.f;
-	direction = SOUTH;
+	direction = NORTH;
 	action = Action::NONE;
 	foodContactFlag = false;
 }
@@ -27,10 +27,10 @@ Game::Game(int mapSizeX, int mapSizeY) : mapSizeX(mapSizeX), mapSizeY(mapSizeY){
 Game::~Game() {};
  
 void    Game::initSnake() {
-    snake.push_back(Vec2(3, 3));
-    snake.push_back(Vec2(3, 4));
-    snake.push_back(Vec2(3, 5));
-    snake.push_back(Vec2(3, 6));
+    snake.push_back(Vec2(mapSizeX / 2, mapSizeY / 2));
+    snake.push_back(Vec2(mapSizeX / 2, (mapSizeY / 2) - 1));
+    snake.push_back(Vec2(mapSizeX / 2, (mapSizeY / 2) - 2));
+    snake.push_back(Vec2(mapSizeX / 2, (mapSizeY / 2) - 3));
 }
 
 void    Game::generateFood() {

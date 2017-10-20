@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 13:20:32 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 15:50:50 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,31 @@ static void    checkDlError(void *dlHandle) {
     }
 }
 
-int     main() {
+static void     checkParameters(int ac, char **av) {
+    if (ac != 3) {
+        std::cerr << "error: need 2 parameters, width & height" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    long int width = strtol(av[1], NULL, 0);
+    long int height = strtol(av[2], NULL, 0);
+    if (width == 0L || height == 0L) {
+        std::cerr << "error: invalid parameters" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    if (width > 50 || height > 50) {
+        std::cerr << "error: parameters maximum is 50" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+
+}
+
+int     main(int ac, char **av) {
     srand(time(NULL));
 
+    checkParameters(ac, av);
     void *dlHandle = dlopen("OpenglDL.so", RTLD_LAZY | RTLD_LOCAL);
 
     IgraphLib *(*initContext)(int, int);
@@ -31,8 +53,8 @@ int     main() {
     destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext");
     checkDlError(dlHandle);
 
-    Game game(10,10);
-    IgraphLib *lib = initContext(10, 10);
+    Game game(atoi(av[1]),atoi(av[2]));
+    IgraphLib *lib = initContext(atoi(av[1]),atoi(av[2]));
 
     Action::Enum action = Action::NONE;
     
