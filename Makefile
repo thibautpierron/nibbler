@@ -6,7 +6,7 @@
 #    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/21 11:32:23 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/19 16:43:53 by tpierron         ###   ########.fr        #
+#    Updated: 2017/10/20 13:22:47 by tpierron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME = Nibbler
 LIB1_NAME = OpenglDL.so
 
 CC = clang++
-MAIN_SRC = main.cpp
+MAIN_SRC = main.cpp \
+			Game.cpp
 
 LIB1_SRC = openglDL/OpenglDL.cpp \
 			openglDL/Shader.class.cpp \

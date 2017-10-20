@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:10:34 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 16:45:24 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 13:16:08 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include <iostream>
 # include <dlfcn.h>
 # include "shared/IgraphLib.hpp"
+# include "Game.hpp"
 
 #endif
