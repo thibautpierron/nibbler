@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 11:48:07 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/20 11:51:20 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ void	OpenglDL::initGL() {
 void    OpenglDL::initScenery() {
     for(int i = 0; i < mapSizeX; i++) {
         scenery.push_back(Vec2(i, -1));
-        scenery.push_back(Vec2(i, mapSizeY + 1));
+        scenery.push_back(Vec2(i, mapSizeY));
     }
     for(int i = 0; i < mapSizeY; i++) {
         scenery.push_back(Vec2(-1, i));
-        scenery.push_back(Vec2(mapSizeX + 1, i));
+        scenery.push_back(Vec2(mapSizeX, i));
     }
 }
 
@@ -136,7 +136,7 @@ void        OpenglDL::drawBody() {
 void        OpenglDL::drawScenery() {
     std::vector<glm::mat4> data;
  
-    for (unsigned int i = 1; i < scenery.size(); i++) {
+    for (unsigned int i = 0; i < scenery.size(); i++) {
         glm::mat4 transform = glm::mat4();
         transform = glm::translate(transform, glm::vec3(scenery[i].x * 2, scenery[i].y * 2, 0.f));
         data.push_back(transform);
@@ -184,8 +184,8 @@ void        OpenglDL::drawFood() {
 
 void        OpenglDL::setCamera() {
     glm::mat4 camera = glm::lookAt(
-        glm::vec3(mapSizeX, -4.f, 20.f),
-        glm::vec3(5.f, 5.f, 0.f),
+        glm::vec3(mapSizeX, -5.f, 50.f),
+        glm::vec3(mapSizeX, mapSizeY, 0.f),
         glm::vec3(0.f, 0.f, 1.f)
     );
     shader->setCamera(camera);
