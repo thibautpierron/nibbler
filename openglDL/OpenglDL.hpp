@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 14:24:31 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/24 14:00:39 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ class OpenglDL : public IgraphLib {
 
 		void	setCamera();
 		float	findHeadOrientation() const;
+		float   findBodyOrientation(unsigned int, unsigned int) const;
 
 		int	mapSizeX;
 		int mapSizeY;

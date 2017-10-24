@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 16:00:01 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/24 14:06:26 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,22 @@ Action::Enum    OpenglDL::eventManager() {
 }
 
 void        OpenglDL::drawBody() {
+    static unsigned int triggerCounter = 0;
     std::vector<glm::mat4> data;
  
     for (unsigned int i = 1; i < snake.size(); i++) {
         glm::mat4 transform = glm::mat4();
         transform = glm::translate(transform, glm::vec3(snake[i].x * 2, snake[i].y * 2, 0.f));
+        transform = glm::rotate(transform, glm::radians(90.f), glm::vec3(1.f, 0.f, 0.f));
+        transform = glm::rotate(transform, findBodyOrientation(i, triggerCounter), glm::vec3(0.f, 1.f, 0.f));
         data.push_back(transform);
     }
     bodyModel->setInstanceBuffer(data);
 
     bodyModel->draw(shader, snake.size() - 1);
+    if (triggerCounter > 40)
+        triggerCounter = 0;
+    triggerCounter++;
 }
 
 void        OpenglDL::drawScenery() {
@@ -168,6 +174,14 @@ float       OpenglDL::findHeadOrientation() const {
     else if (diffY > 0)
         return 90.f;
     return 270.f;
+}
+
+float       OpenglDL::findBodyOrientation(unsigned int index, unsigned int trigger) const {
+    int offset = index % 2 ? 20.f : -20.f;
+    int sign = 1;
+    if(trigger > 20)
+        sign = -1;
+    return offset * sign;
 }
 
 void        OpenglDL::drawFood() {
