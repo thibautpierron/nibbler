@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OpenglDL.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/24 14:06:26 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/25 16:16:57 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,19 +104,20 @@ void    OpenglDL::initScenery() {
 
 Action::Enum    OpenglDL::eventManager() {
     static int repeatFlag = 0;
-    SDL_PollEvent(&events);
-    if (events.window.event == SDL_WINDOWEVENT_CLOSE || events.key.keysym.sym == SDLK_ESCAPE) {
-        return Action::ESCAPE;
-    }
-    if (events.type == SDL_KEYUP)
-    repeatFlag = 0;
-    if (events.type == SDL_KEYDOWN && repeatFlag == 0) {
-        repeatFlag = 1;
-        switch(events.key.keysym.sym) {
-            case SDLK_RIGHT: return Action::RIGHT; break;
-            case SDLK_LEFT: return Action::LEFT; break;
+    while (SDL_PollEvent(&events)) {
+        if (events.window.event == SDL_WINDOWEVENT_CLOSE || events.key.keysym.sym == SDLK_ESCAPE) {
+            return Action::ESCAPE;
         }
-	}
+        if (events.type == SDL_KEYUP)
+        repeatFlag = 0;
+        if (events.type == SDL_KEYDOWN && repeatFlag == 0) {
+            repeatFlag = 1;
+            switch(events.key.keysym.sym) {
+                case SDLK_RIGHT: return Action::RIGHT; break;
+                case SDLK_LEFT: return Action::LEFT; break;
+            }
+        }        
+    }
 	return Action::NONE;
 }
 

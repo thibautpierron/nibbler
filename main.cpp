@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 15:50:50 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/25 16:57:54 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ static void     checkParameters(int ac, char **av) {
         std::cerr << "error: invalid parameters" << std::endl;
         exit(EXIT_FAILURE);
     }
-
+    
+    if (width < 10 || height < 10) {
+        std::cerr << "error: parameters minimum is 10" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    
     if (width > 50 || height > 50) {
         std::cerr << "error: parameters maximum is 50" << std::endl;
         exit(EXIT_FAILURE);
@@ -53,14 +58,14 @@ int     main(int ac, char **av) {
     destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext");
     checkDlError(dlHandle);
 
-    Game game(atoi(av[1]),atoi(av[2]));
+    Game       game(atoi(av[1]),atoi(av[2]));
     IgraphLib *lib = initContext(atoi(av[1]),atoi(av[2]));
 
     Action::Enum action = Action::NONE;
     
     while(action != Action::ESCAPE) {
         action = lib->eventManager();
-
+        
         game.compute(action);
         lib->display(game.getFood(), game.getSnake());
     }

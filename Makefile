@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
+#    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/07/21 11:32:23 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/20 13:22:47 by tpierron         ###   ########.fr        #
+#    Updated: 2017/10/25 15:20:38 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,9 @@ NAME = Nibbler
 LIB1_NAME = OpenglDL.so
 
 CC = clang++
-MAIN_SRC = main.cpp \
-			Game.cpp
+MAIN_SRC =	main.cpp \
+			Game.cpp \
+			frameTimer.class.cpp
 
 LIB1_SRC = openglDL/OpenglDL.cpp \
 			openglDL/Shader.class.cpp \
@@ -34,12 +35,12 @@ OBJ_NAME = $(MAIN_SRC:.cpp=.o)
 
 OPENGL = -framework OpenGl -framework AppKit
 
-SDL = -L/Users/tpierron/.brew/lib -lSDL2
-SDL_PATH = -I/Users/tpierron/.brew/include/SDL2
-GLM = -L/Users/tpierron/.brew/lib -lglm
-GLM_PATH = -I/Users/tpierron/.brew/include/glm
-ASS = -L/Users/tpierron/.brew/lib -lassimp
-ASS_PATH = -I/Users/tpierron/.brew/include/
+SDL = -L/Users/$(LOGNAME)/.brew/lib -lSDL2
+SDL_PATH = -I/Users/$(LOGNAME)/.brew/include/SDL2
+GLM = -L/Users/$(LOGNAME)/.brew/lib -lglm
+GLM_PATH = -I/Users/$(LOGNAME)/.brew/include/glm
+ASS = -L/Users/$(LOGNAME)/.brew/lib -lassimp
+ASS_PATH = -I/Users/$(LOGNAME)/.brew/include/
 
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 

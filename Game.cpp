@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 16:02:18 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/25 16:53:29 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ Game::Game(int mapSizeX, int mapSizeY) : mapSizeX(mapSizeX), mapSizeY(mapSizeY){
 	generateFood();
 	generateFood();
 
-	gameSpeed = 6.f / 60.f;
-	gameTick = 0.f;
+	gameFrameTimer = new frameTimer(60.0f);
+	gameSpeed = 4;
 	direction = NORTH;
 	action = Action::NONE;
 	foodContactFlag = false;
@@ -52,17 +52,20 @@ void    Game::generateFood() {
 }
 
 void	Game::compute(Action::Enum action) {
-	if(action == Action::LEFT || action == Action::RIGHT)
-		this->action = action;
-
-	if(gameTick >= 1.f) {
-		getNextMoveDirection(this->action);
-		moveSnake();
-		checkCollisions();
-		this->action = Action::NONE;
-		gameTick = 0.f;
-	}
-	gameTick += gameSpeed;
+	{
+		if(action == Action::LEFT || action == Action::RIGHT)
+			this->action = action;
+		gameFrameTimer->updateTimeBeginningLoop();
+		if (gameFrameTimer->frameNumber % gameSpeed == 0)
+		{
+			getNextMoveDirection(this->action);
+			moveSnake();
+			checkCollisions();
+			this->action = Action::NONE;
+		}
+		gameFrameTimer->updateTimeEndLoop();
+		}
+	
 }
 
 void	Game::checkCollisions() {
@@ -80,7 +83,7 @@ bool		Game::checkFoodCollision() {
 	for (unsigned int i = 0; i < food.size(); i++) {
 		if (snake[0].x == food[i].x && snake[0].y == food[i].y) {
 			food.erase(food.begin() + i);
-			return true;
+			return ((static_cast<int>(snake.size()) < mapSizeX * mapSizeY) ? true : false);
 		}
 	}
 	return false;
