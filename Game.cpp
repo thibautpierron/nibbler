@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/25 16:53:29 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/26 19:08:23 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	Game::checkCollisions() {
 	if (checkWallCollision())
 		std::cout << "WALL COLLISION" << std::endl;
 	if (checkSnakeCollision())
-		std::cout << "SNAKE COLLISION" << std::endl;
+	;
+		// std::cout << "SNAKE COLLISION" << std::endl;
 	if (checkFoodCollision()) {
 		foodContactFlag = true;
 		generateFood();

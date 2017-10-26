@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/25 16:57:54 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/26 17:43:43 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static void     checkParameters(int ac, char **av) {
 
 int     main(int ac, char **av) {
     srand(time(NULL));
-
     checkParameters(ac, av);
-    void *dlHandle = dlopen("OpenglDL.so", RTLD_LAZY | RTLD_LOCAL);
+    // void *dlHandle = dlopen("OpenglDL.so", RTLD_LAZY | RTLD_LOCAL);
+    void *dlHandle = dlopen("nCursesDL/nCursesDL.so", RTLD_LAZY | RTLD_LOCAL);
 
     IgraphLib *(*initContext)(int, int);
     initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext");
