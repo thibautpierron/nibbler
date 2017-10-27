@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IgraphLib.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 15:38:33 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/20 14:24:10 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/27 14:25:52 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class IgraphLib {
 	public:
 		virtual void			display(std::vector<Vec2> food, std::deque<Vec2> snake) = 0;
 		virtual Action::Enum	eventManager() = 0;
+		virtual const char		*toString() = 0;
 };
 
 #endif

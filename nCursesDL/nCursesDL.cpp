@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/26 19:16:27 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/27 16:20:45 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ nCursesDL::nCursesDL( nCursesDL const & src )
 
 nCursesDL::~nCursesDL()
 {
-	delete this->map;
+	delwin(this->map);
+	endwin();
     return;
 }
 
@@ -94,6 +95,13 @@ Action::Enum	nCursesDL::eventManager()
 					return(Action::LEFT);
 				case 27:
 					return(Action::ESCAPE);
+				case 49:
+					std::cout << "COUCOUCOUCOU" << std::endl;
+					return(Action::LIB1);
+				case 50:
+					return(Action::LIB2);
+				case 51:
+					return(Action::LIB3);
 				default:
 					return(Action::NONE);
 			}
@@ -109,6 +117,11 @@ void			nCursesDL::makeBorder() const
 	wattroff(this->map, COLOR_PAIR(30));
 	wnoutrefresh(this->map);
 	doupdate();
+}
+
+const char		*nCursesDL::toString()
+{
+	return ("nCursesDL/nCursesDL.so");
 }
 
 nCursesDL	*initContext(int mapSizeX, int mapSizeY) {

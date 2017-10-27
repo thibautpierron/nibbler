@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:27 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/26 17:46:48 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/27 13:07:33 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ public:
 	nCursesDL &	operator=( nCursesDL const & );
 	void					display(std::vector<Vec2> food, std::deque<Vec2> snake);
 	virtual Action::Enum	eventManager();
+	const char				*toString();
 
 protected:
 private:

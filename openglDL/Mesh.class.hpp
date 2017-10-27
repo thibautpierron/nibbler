@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mesh.class.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:54:43 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 16:24:54 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/27 15:06:55 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <assimp/Importer.hpp>
 # include <OpenGL/gl3.h>
 
-# include "../Shader.class.hpp" 
+# include "Shader.class.hpp" 
 # include "Joint.class.hpp"
 
 struct Vertex {

@@ -6,7 +6,7 @@
 #    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
-#    Updated: 2017/10/26 16:05:44 by mchevall         ###   ########.fr        #
+#    Updated: 2017/10/27 15:29:42 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,12 @@ SRC =	nCursesDL.cpp\
 
 INCLUDES =	nCursesDL.hpp\
 			ncursesetup.hpp
-#	app.class.h Character.class.h Enemy.class.h frameTimer.class.h \
-			AGameEntity.class.h ncursesetup.h Pos2d.class.h Missile.class.h \
-			Scenery.class.h SceneryElem.class.h \
 
 OBJ =	$(SRC:.cpp=.o)
 
 LIB = -lncurses
 
-C++ =	g++ -g -Wall -Wextra -Werror -O3 -std=c++11
+C++ =	clang++ -Wall -Wextra -Werror -O3 -std=c++11
 
 %.o:		%.cpp
 	@echo "\033[1;32;m[$<]\033[0m : " | tr -d '\n'

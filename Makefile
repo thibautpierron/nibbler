@@ -5,62 +5,54 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/07/21 11:32:23 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/26 17:25:14 by mchevall         ###   ########.fr        #
+#    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
+#    Updated: 2017/10/27 15:32:25 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re
+NAME =	Nibbler
 
-NAME = Nibbler
-LIB1_NAME = OpenglDL.so
+SRC =	Game.cpp\
+		frameTimer.class.cpp\
+		main.cpp
 
-CC = clang++
-MAIN_SRC =	main.cpp \
-			Game.cpp \
-			frameTimer.class.cpp
+INCLUDES =	Game.hpp\
+			frameTimer.class.hpp\
+			nibbler.hpp
 
-# LIB1_SRC = openglDL/OpenglDL.cpp \
-# 			openglDL/Shader.class.cpp \
-# 			openglDL/model/Joint.class.cpp \
-# 			openglDL/model/Mesh.class.cpp \
-# 			openglDL/model/Model.class.cpp \
+OBJ =	$(SRC:.cpp=.o)
 
+LIB1PATH = openglDL/
+LIB2PATH = nCursesDL/
+#LIB3PATH = openglDL/
 
-# DL STB_IMAGE !!!!!!!!!!!!!!!!!!!!!!
+C++ =	g++ -Wall -Wextra -Werror -O3 -std=c++11
 
-CFLAGS = -Wall -Wextra -Werror
-OBJ_PATH = ./obj/
-OBJ_NAME = $(MAIN_SRC:.cpp=.o)
+%.o:		%.cpp
+	@echo "\033[1;32;m[$<]\033[0m : " | tr -d '\n'
+	$(C++) -c $<
 
-# OPENGL = -framework OpenGl -framework AppKit
+all:		$(NAME)
 
-# SDL = -L/Users/$(LOGNAME)/.brew/lib -lSDL2
-# SDL_PATH = -I/Users/$(LOGNAME)/.brew/include/SDL2
-# GLM = -L/Users/$(LOGNAME)/.brew/lib -lglm
-# GLM_PATH = -I/Users/$(LOGNAME)/.brew/include/glm
-# ASS = -L/Users/$(LOGNAME)/.brew/lib -lassimp
-# ASS_PATH = -I/Users/$(LOGNAME)/.brew/include/
-
-OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
-
-all: $(NAME)#lib1 $(NAME)
-
-$(OBJ_PATH)%.o: %.cpp
-	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CC) $(CFLAGS) -o $@ -c $< -std=c++11
-
-$(NAME): $(OBJ)
-	$(CC) $(SDL) $(CFLAGS) -o $@ $^
-
-# lib1:
-	# $(CC) -shared -fPIC -o $(LIB1_NAME) $(LIB1_SRC) $(SDL) $(SDL_PATH) $(ASS) $(ASS_PATH)  $(GLM_PATH) $(OPENGL) $(CFLAGS) -std=c++11
+$(NAME):	$(OBJ) $(INCLUDES)
+	$(C++) -o $@ $(OBJ)
+	make -C $(LIB1PATH)
+	make -C $(LIB2PATH)
+	@echo "\033[1;32;m[Compilation Successful]\033[0m"
+	@echo "\033[1;36;m$(NAME)\033[1;32;m ready to go !\033[0m"
 
 clean:
-	rm -rf $(OBJ_PATH)
+	@echo "\033[0;33;m[Clean]\033[0m              : " | tr -d '\n'
+	make -C $(LIB1PATH) clean
+	make -C $(LIB2PATH) clean
+	rm -f $(OBJ)
 
-fclean: clean
-	rm -f $(NAME) $(LIB1_NAME)
+fclean:		clean
+	@echo "\033[0;31;m[Deleting $(NAME)]\033[0m : " | tr -d '\n'
+	make -C $(LIB1PATH) fclean
+	make -C $(LIB2PATH) fclean
+	rm -f $(NAME)
 
-re: fclean all
+re:			fclean all
 
+.PHONY:		all clean fclean re

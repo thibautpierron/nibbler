@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/25 16:16:57 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/27 15:58:21 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ OpenglDL::OpenglDL(int mapSizeX, int mapSizeY) :
         initScenery();
         
         shader = new Shader("./openglDL/shaders/static_model_instanced.glvs",
-                            "./openglDL/shaders/simple_diffuse.glfs");
-
+        "./openglDL/shaders/simple_diffuse.glfs");
+        
         headModel = new Model("./openglDL/head.obj", false);
         bodyModel = new Model("./openglDL/body.obj", false);
         foodModel = new Model("./openglDL/food.obj", false);
         sceneryModel = new Model("./openglDL/wall.obj", false);
-}
+    }
 
 OpenglDL::~OpenglDL() {
     
@@ -75,6 +75,7 @@ void	OpenglDL::initSDL() {
                                         1024, 1024,
                                         SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
     ctx = SDL_GL_CreateContext(win);
+    SDL_RaiseWindow(win);
     if(ctx == 0) {
         std::cout << SDL_GetError() << std::endl;
         exit(0);
@@ -115,6 +116,9 @@ Action::Enum    OpenglDL::eventManager() {
             switch(events.key.keysym.sym) {
                 case SDLK_RIGHT: return Action::RIGHT; break;
                 case SDLK_LEFT: return Action::LEFT; break;
+                case SDLK_1: return Action::LIB1; break;
+                case SDLK_2: return Action::LIB2; break;
+                case SDLK_3: return Action::LIB3; break;
             }
         }        
     }
@@ -205,6 +209,11 @@ void        OpenglDL::setCamera() {
     );
     shader->setCamera(camera);
     shader->setView();
+}
+
+const char	*OpenglDL::toString()
+{
+	return ("openglDL/OpenglDL.so");
 }
 
 OpenglDL	*initContext(int mapSizeX, int mapSizeY) {

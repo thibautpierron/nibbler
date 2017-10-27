@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OpenglDL.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/24 14:00:39 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/27 15:06:40 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define OPENGLDL_HPP
 
 # include "../shared/IgraphLib.hpp"
-# include "./Shader.class.hpp"
-# include "./model/Model.class.hpp"
+# include "Shader.class.hpp"
+# include "Model.class.hpp"
 
 
 # include <iostream>
@@ -32,6 +32,7 @@ class OpenglDL : public IgraphLib {
 
 		void					display(std::vector<Vec2> food, std::deque<Vec2> snake);
 		virtual Action::Enum	eventManager();
+		const char				*toString();
 
 	private:
 		OpenglDL();

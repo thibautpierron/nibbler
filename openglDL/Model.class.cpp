@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Model.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 10:02:40 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 16:38:33 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/27 15:07:16 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Model.class.hpp"
 # define STB_IMAGE_IMPLEMENTATION
-# include "../stb_image.h"
+# include "stb_image.h"
 
 int	Model::i = 0;
 
