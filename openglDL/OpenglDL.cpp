@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OpenglDL.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 15:58:21 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 10:54:28 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ OpenglDL::~OpenglDL() {
 	return;
 }
 
-void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake) {
+void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver) {
+    if (gameOver)
+        return;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->food = food;
@@ -119,6 +121,7 @@ Action::Enum    OpenglDL::eventManager() {
                 case SDLK_1: return Action::LIB1; break;
                 case SDLK_2: return Action::LIB2; break;
                 case SDLK_3: return Action::LIB3; break;
+                case SDLK_SPACE: return Action::RESTART; break;
             }
         }        
     }

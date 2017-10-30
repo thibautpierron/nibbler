@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 15:36:25 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:00:27 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,29 @@ Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[
 	initSnake();
 	generateFood();
 	generateFood();
-
+	
 	gameFrameTimer = new frameTimer(60.0f);
 	gameSpeed = 4;
 	direction = NORTH;
 	action = Action::NONE;
 	foodContactFlag = false;
+	gameOver = false;
 }
 
 Game::~Game() {
 	destroyContext(currentlib);
 	dlclose(dlHandle);
+}
+
+void	Game::restart() {
+	snake.clear();
+	direction = NORTH;
+	initSnake();
+	food.clear();
+	generateFood();
+	generateFood();
+	gameOver = false;
+	action = Action::NONE;
 }
 
 void	Game::initLib(const char *lib)
@@ -81,13 +93,17 @@ Action::Enum	Game::eventManager()
 void	Game::compute(Action::Enum action) {
 	if(action == Action::LEFT || action == Action::RIGHT || action == Action::LIB1|| action == Action::LIB2|| action == Action::LIB3)
 		this->action = action;
+	if(gameOver && action == Action::RESTART)
+		restart();
 	gameFrameTimer->updateTimeBeginningLoop();
 	if (gameFrameTimer->frameNumber % gameSpeed == 0)
 	{
 		getNextMoveDirection(this->action);
 		catchLibChange(this->action);
-		moveSnake();
-		checkCollisions();
+		if(!gameOver) {
+			moveSnake();
+			gameOver = checkCollisions();
+		}
 		this->action = Action::NONE;
 	}
 	gameFrameTimer->updateTimeEndLoop();
@@ -95,21 +111,21 @@ void	Game::compute(Action::Enum action) {
 
 void	Game::display()
 {
-	currentlib->display(food, snake);
+	currentlib->display(food, snake, gameOver);
 }
 
 
 
-void	Game::checkCollisions() {
+bool	Game::checkCollisions() {
 	if (checkWallCollision())
-		// std::cout << "WALL COLLISION" << std::endl;
+		return true;
 	if (checkSnakeCollision())
-	;
-		// std::cout << "SNAKE COLLISION" << std::endl;
+		return true;
 	if (checkFoodCollision()) {
 		foodContactFlag = true;
 		generateFood();
 	}
+	return false;
 }
 
 bool		Game::checkFoodCollision() {

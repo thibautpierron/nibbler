@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IgraphLib.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 15:38:33 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 14:25:52 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 10:40:16 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ struct Vec2 {
 
 class IgraphLib {
 	public:
-		virtual void			display(std::vector<Vec2> food, std::deque<Vec2> snake) = 0;
+		virtual void			display(std::vector<Vec2> food,
+										std::deque<Vec2> snake,
+										bool gameOver) = 0;
 		virtual Action::Enum	eventManager() = 0;
 		virtual const char		*toString() = 0;
 };

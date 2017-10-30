@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:04:49 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 12:44:41 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 10:47:32 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ class Game {
 		Game();
 		
 		void		checkDlError(void *dlHandle);
-		void		checkCollisions();
+		bool		checkCollisions();
 		bool		checkFoodCollision();
 		bool		checkWallCollision();
 		bool		checkSnakeCollision();
@@ -50,6 +50,7 @@ class Game {
 		void		getNextMoveDirection(Action::Enum);
 		void		catchLibChange(Action::Enum);
 		void		moveSnake();
+		void		restart();
 		
 		void		*dlHandle;
 		IgraphLib	*(*initContext)(int, int);
@@ -70,6 +71,7 @@ class Game {
 		Direction			direction;
 		Action::Enum		action;
 		bool				foodContactFlag;
+		bool				gameOver;
 };
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   OpenglDL.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 15:06:40 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 10:52:29 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class OpenglDL : public IgraphLib {
 		OpenglDL(int, int);
 		virtual ~OpenglDL();
 
-		void					display(std::vector<Vec2> food, std::deque<Vec2> snake);
+		void					display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver);
 		virtual Action::Enum	eventManager();
 		const char				*toString();
 

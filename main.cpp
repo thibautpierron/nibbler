@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 14:33:06 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:06:51 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@ int     main(int ac, char **av) {
     srand(time(NULL));
     checkParameters(ac, av);
     const char *libnames[3] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "glfwDL/glfwDL.so"};
-    // // void *dlHandle = dlopen("OpenglDL.so", RTLD_LAZY | RTLD_LOCAL);
-    // void *dlHandle = dlopen("nCursesDL/nCursesDL.so", RTLD_LAZY | RTLD_LOCAL);
-
-    // IgraphLib *(*initContext)(int, int);
-    // initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext");
-    // checkDlError(dlHandle);
-    // void    (*destroyContext)(IgraphLib *);
-    // destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext");
-    // checkDlError(dlHandle);
 
     Game       game(atoi(av[1]),atoi(av[2]), libnames);
     Action::Enum action = Action::NONE;

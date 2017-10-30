@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nCursesDL.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:27 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/27 13:07:33 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 10:53:05 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ public:
 	virtual ~nCursesDL();
 
 	nCursesDL &	operator=( nCursesDL const & );
-	void					display(std::vector<Vec2> food, std::deque<Vec2> snake);
+	void					display(std::vector<Vec2> food, std::deque<Vec2> snake, bool GameOver);
 	virtual Action::Enum	eventManager();
 	const char				*toString();
 

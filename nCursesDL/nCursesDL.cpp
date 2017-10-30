@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nCursesDL.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/27 16:20:45 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:03:55 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 nCursesDL::nCursesDL(){;}
 nCursesDL::nCursesDL(int mapX, int mapY) : _mapX(mapX), _mapY(mapY)
 {
+	system("osascript -e 'tell application \"iTerm\" to activate'");
 	setup_ncurses();
 	this->map = subwin(stdscr, this->_mapY+2, this->_mapX+2, 0, 0);
 	// this->ui = subwin(stdscr, this->mapSize.y + 2, 100 + 2, 0, this->mapSize.x + 2);
@@ -42,9 +43,11 @@ nCursesDL &	nCursesDL::operator=( nCursesDL const & rhs )
     return *this;
 }
 
-void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake)
+void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver)
 {
 	//draw map
+	if (gameOver)
+		return;
 	for (int i = 1; i <= this->_mapX+2; i++)
 		for (int j = 1; j < this->_mapY+2; j++)
 			mvwprintw(this->map, j, i,"%c", ' ');
@@ -96,12 +99,13 @@ Action::Enum	nCursesDL::eventManager()
 				case 27:
 					return(Action::ESCAPE);
 				case 49:
-					std::cout << "COUCOUCOUCOU" << std::endl;
 					return(Action::LIB1);
 				case 50:
 					return(Action::LIB2);
 				case 51:
 					return(Action::LIB3);
+				case 32:
+					return(Action::RESTART);
 				default:
 					return(Action::NONE);
 			}
