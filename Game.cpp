@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 11:00:27 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/30 13:55:43 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,16 +159,20 @@ void	Game::catchLibChange(Action::Enum action)
 	{
 		destroyContext(currentlib);
 		initLib(lib1);
+		usleep(1500000);
 	}
-	else if (action == Action::LIB2 && currentlib->toString() != lib2)
+	else if (action == Action::LIB2 && std::strcmp(currentlib->toString(), lib2))
 	{
 		destroyContext(currentlib);
 		initLib(lib2);
+		usleep(1500000);
+		
 	}
-	else if (action == Action::LIB3 && currentlib->toString() != lib3)
+	else if (action == Action::LIB3 && std::strcmp(currentlib->toString(), lib3))
 	{
 		destroyContext(currentlib);
 		initLib(lib3);
+		usleep(1500000);
 	}
 }
 

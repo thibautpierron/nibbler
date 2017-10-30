@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nCursesDL.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/30 11:03:55 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/30 13:58:38 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 nCursesDL::nCursesDL(){;}
 nCursesDL::nCursesDL(int mapX, int mapY) : _mapX(mapX), _mapY(mapY)
 {
-	system("osascript -e 'tell application \"iTerm\" to activate'");
+	system("osascript termresizing");
+	flushinp();
 	setup_ncurses();
 	this->map = subwin(stdscr, this->_mapY+2, this->_mapX+2, 0, 0);
 	// this->ui = subwin(stdscr, this->mapSize.y + 2, 100 + 2, 0, this->mapSize.x + 2);
@@ -47,7 +48,17 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 {
 	//draw map
 	if (gameOver)
-		return;
+	{
+		int midscreenY = (_mapY + 2) / 2;
+		int midscreenX = (_mapX + 2) / 2;
+		wattron(this->map, COLOR_PAIR(25));
+		mvwprintw(this->map, midscreenY - 2, midscreenX - 9/2,"%s", "GAME OVER");
+		mvwprintw(this->map, midscreenY , midscreenX - 13/2,"%s", "PRESS \"SPACE\"");
+		mvwprintw(this->map, midscreenY + 2, midscreenX - 13/2,"%s", "TO PLAY AGAIN");
+		wattroff(this->map, COLOR_PAIR(25));
+		this->makeBorder();
+		return ;
+	}
 	for (int i = 1; i <= this->_mapX+2; i++)
 		for (int j = 1; j < this->_mapY+2; j++)
 			mvwprintw(this->map, j, i,"%c", ' ');
