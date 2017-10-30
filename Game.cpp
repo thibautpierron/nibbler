@@ -6,14 +6,15 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 13:55:43 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/30 19:16:03 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
 Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[0]), lib2(libnames[1]), lib3(libnames[2]), mapSizeX(mapSizeX), mapSizeY(mapSizeY){
-	initLib(lib1);
+	initLib(lib2);
+	initSound("soundDL/soundDL.so");
 	initSnake();
 	generateFood();
 	generateFood();
@@ -27,6 +28,7 @@ Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[
 }
 
 Game::~Game() {
+	destroyContextSound(currentlibsound);
 	destroyContext(currentlib);
 	dlclose(dlHandle);
 }
@@ -42,14 +44,27 @@ void	Game::restart() {
 	action = Action::NONE;
 }
 
+void	Game::initSound(const char *soundlib)
+{
+	this->dlHandleSound = dlopen(soundlib, RTLD_LAZY | RTLD_LOCAL);
+	checkDlError(dlHandleSound);
+	if ((this->initContextSound = (IsoundLib *(*)(const char *))dlsym(dlHandleSound, "initContext")) == NULL)
+		std::cerr << "Error : " << dlerror() << std::endl;
+	if((this->destroyContextSound = (void(*)(IsoundLib *))dlsym(dlHandleSound, "destroyContext")) == NULL)
+		std::cerr << "Error : " << dlerror() << std::endl;
+	
+	currentlibsound = this->initContextSound("soundDL/sound.wav");
+}
+
+
 void	Game::initLib(const char *lib)
 {
 	this->dlHandle = dlopen(lib, RTLD_LAZY | RTLD_LOCAL);
-	
-	this->initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext");
 	checkDlError(dlHandle);
-	this->destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext");
-	checkDlError(dlHandle);
+	if ((this->initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext")) == NULL)
+		std::cerr << "Error : " << dlerror() << std::endl;
+	if ((this->destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext")) == NULL)
+		std::cerr << "Error : " << dlerror() << std::endl;
 	currentlib = initContext(mapSizeX,mapSizeY);
 }
 
@@ -62,9 +77,12 @@ void	Game::initSnake() {
 
 void	Game::checkDlError(void *dlHandle) {
     if (!dlHandle) {
-        std::cerr << "error: " << dlerror() << std::endl;
-        exit(EXIT_FAILURE);
-    }
+		if (dlerror() != NULL)
+		{
+        	std::cerr << "error: " << dlerror() << std::endl;
+			exit(EXIT_FAILURE);
+		}
+	}
 }
 
 void	Game::generateFood() {

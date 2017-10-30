@@ -6,7 +6,7 @@
 #    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
-#    Updated: 2017/10/27 15:26:35 by mchevall         ###   ########.fr        #
+#    Updated: 2017/10/30 15:11:53 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,12 @@ SRC =	OpenglDL.cpp \
 		Joint.class.cpp \
 		Mesh.class.cpp \
 		Model.class.cpp \
+
+INCLUDES =	OpenglDL.hpp\
+			Shader.class.hpp\
+			Joint.class.hpp\
+			Mesh.class.hpp\
+			Model.class.hpp
 
 CFLAGS = -Wall -Wextra -Werror -O3 -std=c++11
 OBJ_PATH = ./obj/
