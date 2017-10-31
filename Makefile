@@ -6,7 +6,7 @@
 #    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
-#    Updated: 2017/10/30 17:55:40 by mchevall         ###   ########.fr        #
+#    Updated: 2017/10/31 16:22:44 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ =	$(SRC:.cpp=.o)
 
 LIB1PATH = openglDL/
 LIB2PATH = nCursesDL/
-LIB3PATH = openglDL/
+LIB3PATH = twoDDL/
 LIBSOUNDPATH = soundDL/
 
 C++ =	g++ -Wall -Wextra -Werror -O3 -std=c++11
@@ -67,4 +67,7 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re lib1 lib2 lib3
+install:	all
+	./script.sh
+
+.PHONY:		all clean fclean re lib1 lib2 lib3 libsound install

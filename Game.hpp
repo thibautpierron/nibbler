@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:04:49 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 11:39:22 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:10:17 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ class Game {
 		void		(*destroyContext)(IgraphLib *);
 		
 		void			*dlHandleSound;
-		IsoundLib		*(*initContextSound)();
+		IsoundLib		*(*initContextSound)(bool);
 		void			(*destroyContextSound)(IsoundLib *);
 		
 
@@ -75,7 +75,8 @@ class Game {
 		int			mapSizeY;
 
 		int			gameSpeed;
-		
+		int			volume;
+
 		frameTimer			*gameFrameTimer;
 		std::vector<Vec2>	food;
 		std::deque<Vec2>	snake;

@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 10:15:49 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:04:45 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ Action::Enum    OpenglDL::eventManager() {
                 case SDLK_1: return Action::LIB1; break;
                 case SDLK_2: return Action::LIB2; break;
                 case SDLK_3: return Action::LIB3; break;
+                case SDLK_m: return Action::SOUND; break;
                 case SDLK_SPACE: return Action::RESTART; break;
             }
         }        

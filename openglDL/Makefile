@@ -6,7 +6,7 @@
 #    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
-#    Updated: 2017/10/30 15:11:53 by mchevall         ###   ########.fr        #
+#    Updated: 2017/10/31 14:31:49 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(LIBNAME): $(OBJ)
 	$(CC) -shared -fPIC $(SDL) $(ASSIMP) $(OPENGL) $(CFLAGS) -o $@ $^
 
 clean:
-	rm -rf $(OBJ_PATH)
+	rm -rf $(OBJ_NAME)
 
 fclean: clean
 	rm -f $(LIBNAME)

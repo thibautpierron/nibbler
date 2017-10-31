@@ -6,25 +6,29 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 11:55:41 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:24:50 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
 Game::Game(int mapSizeX, int mapSizeY, const char *libnames[4]) : lib1(libnames[0]), lib2(libnames[1]), lib3(libnames[2]), libsound1(libnames[3]), mapSizeX(mapSizeX), mapSizeY(mapSizeY){
-	initLib(lib1);
-	initLibSound(libsound1);
-	initSnake();
-	generateFood();
-	generateFood();
-	
 	gameFrameTimer = new frameTimer(60.0f);
-	gameSpeed = 4;
+	gameSpeed = 5;
 	direction = NORTH;
 	action = Action::NONE;
 	foodContactFlag = false;
 	gameOver = false;
+	volume = true;
+	
+	initLibSound(libsound1);
+	initLib(lib2);
+	initSnake();
+	generateFood();
+	generateFood();
+
+	currentlibsound->playSound(SoundAction::OPENING);
+	currentlibsound->playSound(SoundAction::MUSIC);
 }
 
 Game::~Game() {
@@ -42,6 +46,8 @@ void	Game::restart() {
 	generateFood();
 	gameOver = false;
 	action = Action::NONE;
+	gameFrameTimer->frameNumber = 0;
+	gameSpeed = 5;
 }
 
 void	Game::initLibSound(const char *soundlib)
@@ -51,7 +57,7 @@ void	Game::initLibSound(const char *soundlib)
 		std::cerr << "Error : " << dlerror() << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	if ((this->initContextSound = (IsoundLib *(*)())dlsym(dlHandleSound, "initContext")) == NULL)
+	if ((this->initContextSound = (IsoundLib *(*)(bool))dlsym(dlHandleSound, "initContext")) == NULL)
 	{
 		std::cerr << "Error : " << dlerror() << std::endl;
 		exit(EXIT_FAILURE);
@@ -61,7 +67,7 @@ void	Game::initLibSound(const char *soundlib)
 		std::cerr << "Error : " << dlerror() << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	currentlibsound = this->initContextSound();
+	currentlibsound = this->initContextSound(volume);
 }
 
 
@@ -116,8 +122,7 @@ void	Game::generateFood() {
 				flag = true;
 		}
 	}
-
-    food.push_back(Vec2(nX, nY));
+	food.push_back(Vec2(nX, nY));
 }
 
 Action::Enum	Game::eventManager()
@@ -126,6 +131,14 @@ Action::Enum	Game::eventManager()
 }
 
 void	Game::compute(Action::Enum action) {
+	if (gameFrameTimer->frameNumber % 900 == 0)
+		if((gameSpeed -= 1) == 0)
+			gameSpeed = 1;
+	if(action == Action::SOUND)
+	{
+		volume = !volume;
+		this->currentlibsound->playSound(SoundAction::TOGGLE_SOUND);
+	}
 	if(action == Action::LEFT || action == Action::RIGHT || action == Action::LIB1|| action == Action::LIB2|| action == Action::LIB3)
 		this->action = action;
 	if(gameOver && action == Action::RESTART)
@@ -160,7 +173,8 @@ bool	Game::checkCollisions() {
 	if (checkFoodCollision()) {
 		foodContactFlag = true;
 		currentlibsound->playSound(SoundAction::EAT);
-		generateFood();
+		if (static_cast<int>(snake.size()) < (mapSizeX * mapSizeY - 1))
+			generateFood();
 	}
 	return false;
 }
@@ -196,27 +210,30 @@ void	Game::catchLibChange(Action::Enum action)
 	{
 		destroyContext(currentlib);
 		destroyContextSound(currentlibsound);
-		initLib(lib1);
 		initLibSound(libsound1);
-		usleep(1500000);
+		currentlibsound->playSound(SoundAction::MUSIC);
+		initLib(lib1);
 	}
 	else if (action == Action::LIB2 && std::strcmp(currentlib->toString(), lib2))
 	{
 		destroyContext(currentlib);
 		destroyContextSound(currentlibsound);
-		initLib(lib2);
 		initLibSound(libsound1);
-		usleep(1500000);
-		
+		currentlibsound->playSound(SoundAction::MUSIC);
+		initLib(lib2);
 	}
 	else if (action == Action::LIB3 && std::strcmp(currentlib->toString(), lib3))
 	{
 		destroyContext(currentlib);
 		destroyContextSound(currentlibsound);
-		initLib(lib3);
 		initLibSound(libsound1);
-		usleep(1500000);
+		currentlibsound->playSound(SoundAction::MUSIC);
+		initLib(lib3);
 	}
+	else
+		return;
+	usleep(1500000);
+		
 }
 
 void	Game::getNextMoveDirection(Action::Enum action) {

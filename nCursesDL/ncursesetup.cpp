@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/06 08:42:10 by fdexheim          #+#    #+#             */
-/*   Updated: 2017/10/27 16:08:04 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 13:38:58 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				setup_ncurses(void)
 {
 	initscr();
 	noecho();
+	clear();
 	nodelay(stdscr, TRUE);
 	keypad(stdscr, TRUE);
 	curs_set(0);

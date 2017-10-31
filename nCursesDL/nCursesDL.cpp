@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/31 10:48:32 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 15:16:04 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ nCursesDL::nCursesDL(int mapX, int mapY) : _mapX(mapX), _mapY(mapY)
 	system("osascript termresizing");
 	flushinp();
 	setup_ncurses();
-	this->map = subwin(stdscr, this->_mapY+2, this->_mapX+2, 0, 0);
+	this->map = subwin(stdscr, (this->_mapY+2), 2 * this->_mapX + 2, 0, 0);
 	// this->ui = subwin(stdscr, this->mapSize.y + 2, 100 + 2, 0, this->mapSize.x + 2);
 	makeBorder();
 }
@@ -50,7 +50,7 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 	if (gameOver)
 	{
 		int midscreenY = (_mapY + 2) / 2;
-		int midscreenX = (_mapX + 2) / 2;
+		int midscreenX = (_mapX + 2);
 		wattron(this->map, COLOR_PAIR(25));
 		mvwprintw(this->map, midscreenY - 2, midscreenX - 9/2,"%s", "GAME OVER");
 		mvwprintw(this->map, midscreenY , midscreenX - 13/2,"%s", "PRESS \"SPACE\"");
@@ -59,23 +59,23 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 		this->makeBorder();
 		return ;
 	}
-	for (int i = 1; i <= this->_mapX+2; i++)
+	for (int i = 1; i <= 2 * this->_mapX+2; i++)
 		for (int j = 1; j < this->_mapY+2; j++)
 			mvwprintw(this->map, j, i,"%c", ' ');
 	//draw snake
 	wattron(this->map, COLOR_PAIR(38));
 	for(size_t i = 0; i < snake.size(); i++)
-			mvwprintw(this->map, _mapY - snake[i].y, snake[i].x + 1, "%c", 'O');
+			mvwprintw(this->map, _mapY - snake[i].y, 2 * snake[i].x + 1, "%c", "\u2655");
 	wattroff(this->map, COLOR_PAIR(38));
 	//draw head
 	wattron(this->map, COLOR_PAIR(37));
-	mvwprintw(this->map, _mapY - snake[0].y, snake[0].x + 1, "%c", '#');
+	mvwprintw(this->map, _mapY - snake[0].y, 2 * snake[0].x + 1, "%c", "\u2655");
 	wattroff(this->map, COLOR_PAIR(37));
 	//draw food
-	wattron(this->map, COLOR_PAIR(13));
+	wattron(this->map, COLOR_PAIR(35));
 	for (size_t i= 0; i < food.size(); i++)
-		mvwprintw(this->map, _mapY - food[i].y, food[i].x + 1, "%c", 'o');
-	wattroff(this->map, COLOR_PAIR(13));
+		mvwprintw(this->map, _mapY - food[i].y, 2 * (food[i].x)+ 1, "%c", "\u2655");
+	wattroff(this->map, COLOR_PAIR(35));
 	this->makeBorder();
 }
 
@@ -115,6 +115,8 @@ Action::Enum	nCursesDL::eventManager()
 					return(Action::LIB2);
 				case 51:
 					return(Action::LIB3);
+				case 109:
+					return(Action::SOUND);
 				case 32:
 					return(Action::RESTART);
 				default:
