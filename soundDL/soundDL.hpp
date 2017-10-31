@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:13:51 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/30 17:38:42 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 11:38:41 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,30 @@ class soundDL : public IsoundLib
 {
 
 public:
-	soundDL(const char *file);
+	soundDL();
 	soundDL( soundDL const & );
 	virtual ~soundDL();
 	
-	soundDL &	operator=( soundDL const & );
-	void		playSound(const char *sound);	
+	soundDL &		operator=( soundDL const & );
+	void			playSound(SoundAction::Enum action);
 protected:
 private:
-	soundDL();
 	int			_frequency;
 	uint16_t	_format;
 	int			_channels;
 	int			_chunksize;
 	Mix_Music*	_music;
+	Mix_Music*	_sfx;
+	const char*	_musicfile;
+	const char*	_deathfile;
+	const char*	_eatfile;
 
 
 };
 
 
 extern "C" {
-	soundDL		*initContext(const char *file);
+	soundDL		*initContext();
 	void		destroyContext(soundDL *);
 }
 

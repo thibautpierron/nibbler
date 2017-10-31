@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 19:17:14 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 10:15:49 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ OpenglDL::~OpenglDL() {
 
 	SDL_GL_DeleteContext(ctx);
     SDL_DestroyWindow(win);
-    // SDL_Quit();
+    SDL_Quit();
 
 	return;
 }

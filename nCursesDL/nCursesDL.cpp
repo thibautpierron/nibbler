@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/30 13:58:38 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 10:48:32 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 	//draw snake
 	wattron(this->map, COLOR_PAIR(38));
 	for(size_t i = 0; i < snake.size(); i++)
-			mvwprintw(this->map, snake[i].y + 1, snake[i].x + 1, "%c", 'O');
+			mvwprintw(this->map, _mapY - snake[i].y, snake[i].x + 1, "%c", 'O');
 	wattroff(this->map, COLOR_PAIR(38));
 	//draw head
 	wattron(this->map, COLOR_PAIR(37));
-	mvwprintw(this->map, snake[0].y + 1, snake[0].x + 1, "%c", '#');
+	mvwprintw(this->map, _mapY - snake[0].y, snake[0].x + 1, "%c", '#');
 	wattroff(this->map, COLOR_PAIR(37));
 	//draw food
 	wattron(this->map, COLOR_PAIR(13));
 	for (size_t i= 0; i < food.size(); i++)
-		mvwprintw(this->map, food[i].y + 1, food[i].x + 1, "%c", 'o');
+		mvwprintw(this->map, _mapY - food[i].y, food[i].x + 1, "%c", 'o');
 	wattroff(this->map, COLOR_PAIR(13));
 	this->makeBorder();
 }
@@ -104,9 +104,9 @@ Action::Enum	nCursesDL::eventManager()
 			switch (input)
 			{
 				case KEY_LEFT:
-					return(Action::RIGHT);
-				case KEY_RIGHT:
 					return(Action::LEFT);
+				case KEY_RIGHT:
+					return(Action::RIGHT);
 				case 27:
 					return(Action::ESCAPE);
 				case 49:

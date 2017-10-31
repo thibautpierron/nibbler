@@ -6,15 +6,15 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 19:16:03 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 11:43:00 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
-Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[0]), lib2(libnames[1]), lib3(libnames[2]), mapSizeX(mapSizeX), mapSizeY(mapSizeY){
-	initLib(lib2);
-	initSound("soundDL/soundDL.so");
+Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[0]), lib2(libnames[1]), lib3(libnames[2]), libsound1(libnames[3]), mapSizeX(mapSizeX), mapSizeY(mapSizeY){
+	initLib(lib1);
+	initLibSound(libsound1);
 	initSnake();
 	generateFood();
 	generateFood();
@@ -44,27 +44,44 @@ void	Game::restart() {
 	action = Action::NONE;
 }
 
-void	Game::initSound(const char *soundlib)
+void	Game::initLibSound(const char *soundlib)
 {
-	this->dlHandleSound = dlopen(soundlib, RTLD_LAZY | RTLD_LOCAL);
-	checkDlError(dlHandleSound);
-	if ((this->initContextSound = (IsoundLib *(*)(const char *))dlsym(dlHandleSound, "initContext")) == NULL)
+	if ((this->dlHandleSound = dlopen(soundlib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
+	{
 		std::cerr << "Error : " << dlerror() << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	if ((this->initContextSound = (IsoundLib *(*)())dlsym(dlHandleSound, "initContext")) == NULL)
+	{
+		std::cerr << "Error : " << dlerror() << std::endl;
+		exit(EXIT_FAILURE);
+	}
 	if((this->destroyContextSound = (void(*)(IsoundLib *))dlsym(dlHandleSound, "destroyContext")) == NULL)
+	{
 		std::cerr << "Error : " << dlerror() << std::endl;
-	
-	currentlibsound = this->initContextSound("soundDL/sound.wav");
+		exit(EXIT_FAILURE);
+	}
+	currentlibsound = this->initContextSound();
 }
 
 
 void	Game::initLib(const char *lib)
 {
-	this->dlHandle = dlopen(lib, RTLD_LAZY | RTLD_LOCAL);
-	checkDlError(dlHandle);
+	if ((this->dlHandle = dlopen(lib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
+	{
+		std::cerr << "Error : " << dlerror() << std::endl;
+		exit(EXIT_FAILURE);
+	}
 	if ((this->initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext")) == NULL)
+	{
 		std::cerr << "Error : " << dlerror() << std::endl;
+		exit(EXIT_FAILURE);
+	}
 	if ((this->destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext")) == NULL)
+	{
 		std::cerr << "Error : " << dlerror() << std::endl;
+		exit(EXIT_FAILURE);
+	}
 	currentlib = initContext(mapSizeX,mapSizeY);
 }
 
@@ -135,12 +152,14 @@ void	Game::display()
 
 
 bool	Game::checkCollisions() {
-	if (checkWallCollision())
+	if (checkWallCollision() || checkSnakeCollision())
+	{
+		currentlibsound->playSound(SoundAction::DEATH);
 		return true;
-	if (checkSnakeCollision())
-		return true;
+	}
 	if (checkFoodCollision()) {
 		foodContactFlag = true;
+		currentlibsound->playSound(SoundAction::EAT);
 		generateFood();
 	}
 	return false;
@@ -176,20 +195,26 @@ void	Game::catchLibChange(Action::Enum action)
 	if (action == Action::LIB1 && std::strcmp(currentlib->toString(), lib1))
 	{
 		destroyContext(currentlib);
+		destroyContextSound(currentlibsound);
 		initLib(lib1);
+		initLibSound(libsound1);
 		usleep(1500000);
 	}
 	else if (action == Action::LIB2 && std::strcmp(currentlib->toString(), lib2))
 	{
 		destroyContext(currentlib);
+		destroyContextSound(currentlibsound);
 		initLib(lib2);
+		initLibSound(libsound1);
 		usleep(1500000);
 		
 	}
 	else if (action == Action::LIB3 && std::strcmp(currentlib->toString(), lib3))
 	{
 		destroyContext(currentlib);
+		destroyContextSound(currentlibsound);
 		initLib(lib3);
+		initLibSound(libsound1);
 		usleep(1500000);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 14:45:34 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 10:36:26 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void     checkParameters(int ac, char **av) {
 int     main(int ac, char **av) {
     srand(time(NULL));
     checkParameters(ac, av);
-    const char *libnames[3] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "glfwDL/glfwDL.so"};
+    const char *libnames[4] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "glfwDL/glfwDL.so", "soundDL/soundDL.so"};
     // system("afplay ff7sound.mp3 &");
 
     Game       game(atoi(av[1]),atoi(av[2]), libnames);

@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:04:49 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 18:47:32 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/10/31 11:39:22 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,19 @@ class Game {
 		IgraphLib	*(*initContext)(int, int);
 		void		(*destroyContext)(IgraphLib *);
 		
-
 		void			*dlHandleSound;
-		IsoundLib		*(*initContextSound)(const char *);
+		IsoundLib		*(*initContextSound)();
 		void			(*destroyContextSound)(IsoundLib *);
-		void			initSound(const char *lib);
-		IsoundLib		*currentlibsound;
-		
 		
 
 		IgraphLib	*currentlib;
 		const char	*lib1;
 		const char	*lib2;
 		const char	*lib3;
+
+		void			initLibSound(const char *lib);
+		IsoundLib		*currentlibsound;
+		const char		*libsound1;
 		
 		int			mapSizeX;
 		int			mapSizeY;
