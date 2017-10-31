@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:04:49 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 10:47:32 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/31 11:39:22 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <dlfcn.h>
 # include "shared/IgraphLib.hpp"
 # include "frameTimer.class.hpp"
+# include "./shared/IsoundLib.hpp"
 # include "./shared/IgraphLib.hpp"
 # include "./shared/constants.hpp"
 
@@ -55,10 +56,20 @@ class Game {
 		void		*dlHandle;
 		IgraphLib	*(*initContext)(int, int);
 		void		(*destroyContext)(IgraphLib *);
+		
+		void			*dlHandleSound;
+		IsoundLib		*(*initContextSound)();
+		void			(*destroyContextSound)(IsoundLib *);
+		
+
 		IgraphLib	*currentlib;
 		const char	*lib1;
 		const char	*lib2;
 		const char	*lib3;
+
+		void			initLibSound(const char *lib);
+		IsoundLib		*currentlibsound;
+		const char		*libsound1;
 		
 		int			mapSizeX;
 		int			mapSizeY;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 11:06:51 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/31 10:36:26 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void     checkParameters(int ac, char **av) {
         exit(EXIT_FAILURE);
     }
     
-    if (width < 10 || height < 10) {
-        std::cerr << "error: parameters minimum is 10" << std::endl;
+    if (width < 20 || height < 20) {
+        std::cerr << "error: parameters minimum is 20" << std::endl;
         exit(EXIT_FAILURE);
     }
     
@@ -41,7 +41,8 @@ static void     checkParameters(int ac, char **av) {
 int     main(int ac, char **av) {
     srand(time(NULL));
     checkParameters(ac, av);
-    const char *libnames[3] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "glfwDL/glfwDL.so"};
+    const char *libnames[4] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "glfwDL/glfwDL.so", "soundDL/soundDL.so"};
+    // system("afplay ff7sound.mp3 &");
 
     Game       game(atoi(av[1]),atoi(av[2]), libnames);
     Action::Enum action = Action::NONE;

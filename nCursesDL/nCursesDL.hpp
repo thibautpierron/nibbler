@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   nCursesDL.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:27 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/30 10:53:05 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/10/30 16:22:52 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef nCurses_CLASS_HPP
-# define nCurses_CLASS_HPP
+#ifndef NCURSESDL_CLASS_HPP
+# define NCURSESDL_CLASS_HPP
 
-# include <iostream>
 # include <iostream>
 # include <vector>
 # include <deque>
