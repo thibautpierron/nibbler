@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TwoDDL.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibautpierron <thibautpierron@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 11:53:02 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/01 19:23:10 by thibautpier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 TwoDDL::TwoDDL(int mapSizeX, int mapSizeY) :
 	mapSizeX(mapSizeX), mapSizeY(mapSizeY) {
         
-		initSDL();
+        initSDL();
+        initScenery();
     }
 
 TwoDDL::~TwoDDL() {
@@ -39,31 +40,63 @@ void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOv
     updateRectangles();
 
     SDL_RenderClear( renderer );
-    SDL_SetRenderDrawColor( renderer, 0, 255, 0, 255 );
+    SDL_SetRenderDrawColor( renderer, 150, 150, 150, 255 );
     
-    for (unsigned int i = 0; i < rectangles.size(); i++) {
+    for (unsigned int i = 0; i < snakeRect.size(); i++) {
         SDL_SetRenderDrawColor( renderer, 0, 255, 0, 255 );
-        SDL_RenderFillRect( renderer, &rectangles[i] );
+        SDL_RenderFillRect( renderer, &snakeRect[i] );
+    }
+
+    for (unsigned int i = 0; i < foodRect.size(); i++) {
+        SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
+        SDL_RenderFillRect( renderer, &foodRect[i] );
+    }
+
+    for (unsigned int i = 0; i < sceneryRect.size(); i++) {
+        SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
+        SDL_RenderFillRect( renderer, &sceneryRect[i] );
     }
     
-    SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
+    SDL_SetRenderDrawColor( renderer, 150, 150, 150, 255 );
     SDL_RenderPresent(renderer);
-    // SDL_Flip(win);
 }
 
 void    TwoDDL::updateRectangles() {
-    if (rectangles.size() != 1)
-        createRectangle(50, 50);
+    while (snakeRect.size() != snake.size()) {
+        createRectangle(snakeRect);
+    }
+    for (unsigned int i = 0; i < snake.size(); i++) {
+        snakeRect[i].x = snake[i].x * 10;
+        snakeRect[i].y = snake[i].y * 10;
+    }
+
+    while (foodRect.size() != snake.size()) {
+        createRectangle(foodRect);
+    }
+    for (unsigned int i = 0; i < food.size(); i++) {
+        foodRect[i].x = food[i].x * 10;
+        foodRect[i].y = food[i].y * 10;
+    }
 }
 
-void    TwoDDL::createRectangle(float x, float y) {
-    std::cout << "Q" << std::endl;
+void    TwoDDL::initScenery() {
+    for(int i = 0; i < mapSizeX; i += 2) {
+        createRectangle(sceneryRect);
+        sceneryRect[i].x = i * 10;
+        createRectangle(sceneryRect);
+        sceneryRect[i + 1].x = i * 10;
+        sceneryRect[i + 1].y = mapSizeY * 10;
+    }
+}
+
+void    TwoDDL::createRectangle(std::vector<SDL_Rect> & list) {
     SDL_Rect r;
-    r.x = x;
-    r.y = y;
+    
+    r.x = 0;
+    r.y = 0;
     r.w = 10;
     r.h = 10;
-    rectangles.push_back(r);
+    list.push_back(r);
 }
 
 void	TwoDDL::initSDL() {
@@ -109,7 +142,7 @@ const char	*TwoDDL::toString()
 	return ("TwoDDL/TwoDDL.so");
 }
 
-TwoDDL	*initContext(int mapSizeX, int mapSizeY) {
+TwoDDL	    *initContext(int mapSizeX, int mapSizeY) {
 	return new TwoDDL(mapSizeX, mapSizeY);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TwoDDL.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thibautpierron <thibautpierron@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 11:50:39 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/01 19:13:58 by thibautpier      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <vector>
 # include <deque>
 
-# include <SDL.h>
+# include <SDL2/SDL.h>
 
 class TwoDDL : public IgraphLib {
 	public:
@@ -35,7 +35,7 @@ class TwoDDL : public IgraphLib {
 		TwoDDL();
 		void	initSDL();
 		void	initScenery();
-		void	createRectangle(float x, float y);
+		void	createRectangle(std::vector<SDL_Rect> &);
 		void	updateRectangles();
 
 		int	mapSizeX;
@@ -43,13 +43,14 @@ class TwoDDL : public IgraphLib {
 
 		std::vector<Vec2> food;
 		std::deque<Vec2> snake;
-		std::vector<Vec2> scenery;
-
+		
 		SDL_Event		events;
 		SDL_Window		*win;
 		SDL_Renderer	*renderer;
-
-		std::vector<SDL_Rect>		rectangles;
+		
+		std::vector<SDL_Rect>		snakeRect;
+		std::vector<SDL_Rect>		foodRect;
+		std::vector<SDL_Rect>		sceneryRect;
 };
 
 extern "C" {
