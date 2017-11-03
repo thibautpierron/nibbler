@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/30 10:52:29 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:09:52 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <deque>
 
 # include <OpenGL/gl3.h>
-# include <SDL2/SDL.h>
+# include <SDL.h>
 
 class OpenglDL : public IgraphLib {
 	public:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TwoDDL.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibautpierron <thibautpierron@student.    +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/01 19:23:10 by thibautpier      ###   ########.fr       */
+/*   Updated: 2017/11/03 10:34:36 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ TwoDDL::TwoDDL(int mapSizeX, int mapSizeY) :
 	mapSizeX(mapSizeX), mapSizeY(mapSizeY) {
         
         initSDL();
+        setOffset();
         initScenery();
-    }
+        createRectangle(foodRect);
+        createRectangle(foodRect);
+}
 
 TwoDDL::~TwoDDL() {
 
@@ -62,31 +65,49 @@ void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOv
 }
 
 void    TwoDDL::updateRectangles() {
-    while (snakeRect.size() != snake.size()) {
+    if (snakeRect.size() > snake.size())
+        snakeRect.clear();
+
+    for (unsigned int i = 0; snakeRect.size() != snake.size(); i++) {
         createRectangle(snakeRect);
     }
+
     for (unsigned int i = 0; i < snake.size(); i++) {
-        snakeRect[i].x = snake[i].x * 10;
-        snakeRect[i].y = snake[i].y * 10;
+        snakeRect[i].x = snake[i].x * SQUARE_SIZE + SQUARE_SIZE + offsetX;
+        snakeRect[i].y = snake[i].y * SQUARE_SIZE + SQUARE_SIZE + offsetY;
     }
 
-    while (foodRect.size() != snake.size()) {
-        createRectangle(foodRect);
-    }
+    // while (foodRect.size() != food.size()) {
+    //     createRectangle(foodRect);
+    // }
     for (unsigned int i = 0; i < food.size(); i++) {
-        foodRect[i].x = food[i].x * 10;
-        foodRect[i].y = food[i].y * 10;
+        foodRect[i].x = food[i].x * SQUARE_SIZE + SQUARE_SIZE + offsetX;
+        foodRect[i].y = food[i].y * SQUARE_SIZE + SQUARE_SIZE + offsetY;
     }
 }
 
 void    TwoDDL::initScenery() {
-    for(int i = 0; i < mapSizeX; i += 2) {
+    for(int i = 0; i <= mapSizeX; i++) {
         createRectangle(sceneryRect);
-        sceneryRect[i].x = i * 10;
+        sceneryRect.back().x = i * SQUARE_SIZE + offsetX;
+        sceneryRect.back().y = offsetY;
         createRectangle(sceneryRect);
-        sceneryRect[i + 1].x = i * 10;
-        sceneryRect[i + 1].y = mapSizeY * 10;
+        sceneryRect.back().x = i * SQUARE_SIZE + offsetX;
+        sceneryRect.back().y = mapSizeY * SQUARE_SIZE + SQUARE_SIZE + offsetY;
     }
+    for(int i = 0; i <= mapSizeY + 1; i++) {
+        createRectangle(sceneryRect);
+        sceneryRect.back().x = offsetX;
+        sceneryRect.back().y = i * SQUARE_SIZE + offsetY;
+        createRectangle(sceneryRect);
+        sceneryRect.back().y = i * SQUARE_SIZE + offsetY;
+        sceneryRect.back().x = mapSizeX * SQUARE_SIZE + SQUARE_SIZE + offsetX;
+    }
+}
+
+void    TwoDDL::setOffset() {
+    offsetX = (WINDOW_SIZE_X - mapSizeX * SQUARE_SIZE) / 2;
+    offsetY = (WINDOW_SIZE_Y - mapSizeY * SQUARE_SIZE) / 2;
 }
 
 void    TwoDDL::createRectangle(std::vector<SDL_Rect> & list) {
@@ -94,8 +115,8 @@ void    TwoDDL::createRectangle(std::vector<SDL_Rect> & list) {
     
     r.x = 0;
     r.y = 0;
-    r.w = 10;
-    r.h = 10;
+    r.w = SQUARE_SIZE;
+    r.h = SQUARE_SIZE;
     list.push_back(r);
 }
 
@@ -105,11 +126,11 @@ void	TwoDDL::initSDL() {
     win = SDL_CreateWindow("Nibbler",
                             SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED,
-                            1024, 1024,
+                            WINDOW_SIZE_X, WINDOW_SIZE_Y,
                             SDL_WINDOW_SHOWN);
 
     renderer =  SDL_CreateRenderer( win, -1, SDL_RENDERER_ACCELERATED);
-	SDL_RenderSetLogicalSize( renderer, 1024, 1024 );
+	SDL_RenderSetLogicalSize( renderer, WINDOW_SIZE_X, WINDOW_SIZE_Y );
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
 
 }

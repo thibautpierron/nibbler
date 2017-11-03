@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TwoDDL.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibautpierron <thibautpierron@student.    +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/01 19:13:58 by thibautpier      ###   ########.fr       */
+/*   Updated: 2017/11/03 10:36:02 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@
 # include <vector>
 # include <deque>
 
-# include <SDL2/SDL.h>
+# include <SDL.h>
+
+# define WINDOW_SIZE_X	1024
+# define WINDOW_SIZE_Y	1024
+# define SQUARE_SIZE	15
 
 class TwoDDL : public IgraphLib {
 	public:
@@ -34,6 +38,7 @@ class TwoDDL : public IgraphLib {
 	private:
 		TwoDDL();
 		void	initSDL();
+		void	setOffset();
 		void	initScenery();
 		void	createRectangle(std::vector<SDL_Rect> &);
 		void	updateRectangles();
@@ -48,6 +53,9 @@ class TwoDDL : public IgraphLib {
 		SDL_Window		*win;
 		SDL_Renderer	*renderer;
 		
+		unsigned int	offsetX;
+		unsigned int	offsetY;
+
 		std::vector<SDL_Rect>		snakeRect;
 		std::vector<SDL_Rect>		foodRect;
 		std::vector<SDL_Rect>		sceneryRect;

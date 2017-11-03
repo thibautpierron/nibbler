@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
+#    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
-#    Updated: 2017/10/31 14:31:49 by mchevall         ###   ########.fr        #
+#    Updated: 2017/11/03 10:09:06 by tpierron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,6 @@ OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 all: $(LIBNAME)
 $(OBJ_PATH)%.o: %.cpp
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	@mkdir $(OBJ_PATH)/classes 2> /dev/null || echo "" > /dev/null
-	@mkdir $(OBJ_PATH)/classes/model 2> /dev/null || echo "" > /dev/null
-	@mkdir $(OBJ_PATH)/classes/game 2> /dev/null || echo "" > /dev/null
 	$(CC) $(CFLAGS) -o $@ -c $(SDL_PATH) $(ASSIMP_PATH) $(GLM_PATH) $< -std=c++11
 
 $(LIBNAME): $(OBJ)
