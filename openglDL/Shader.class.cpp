@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Shader.class.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 14:11:27 by thibautpier       #+#    #+#             */
-/*   Updated: 2017/10/24 14:51:46 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/02 11:58:50 by lfourque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,15 @@ void    Shader::setView() {
     glUniformMatrix4fv(glGetUniformLocation(this->programID, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(Shader::camera));
 }
 
+void    Shader::setView(glm::mat4 view) {
+    glUniformMatrix4fv(glGetUniformLocation(this->programID, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(Shader::perspective));
+    glUniformMatrix4fv(glGetUniformLocation(this->programID, "viewMatrix"), 1, GL_FALSE, glm::value_ptr(view));
+}
+
+glm::mat4       Shader::getViewMatrix() {
+    return Shader::camera;
+}
+
 void    Shader::setOrthoView(float resX, float resY) {
     glm::mat4 mat = glm::ortho(0.0f, resX, 0.0f, resY);
     glUniformMatrix4fv(glGetUniformLocation(this->programID, "projectionMatrix"), 1, GL_FALSE, glm::value_ptr(mat));
@@ -159,14 +168,18 @@ void    Shader::setInt(const std::string &name, float value) const {
     glUniform1i(glGetUniformLocation(this->programID, name.c_str()), value);
 }
 
+void    Shader::setVec3(const std::string &name, float x, float y, float z) const {
+    glUniform3f(glGetUniformLocation(this->programID, name.c_str()), x, y, z);
+}
+
 GLuint  Shader::getProgramID() const {
     return this->programID;
 }
 
 glm::mat4 Shader::camera = glm::lookAt(
-    glm::vec3(0.f, -4.f, 5.f),
+    glm::vec3(10.f, 5.0f, 15.f),
     glm::vec3(0.f, 0.f, 0.f),
-    glm::vec3(0.f, 0.f, 1.f)
+    glm::vec3(0.f, 1.f, 0.f)
     );
 
-glm::mat4 Shader::perspective = glm::perspective(45.f, 1.0f, 0.1f, 200.f);
+glm::mat4 Shader::perspective = glm::perspective(45.f, 1.0f, 0.1f, 4000.f);

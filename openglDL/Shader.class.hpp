@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Shader.class.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 14:11:32 by thibautpier       #+#    #+#             */
-/*   Updated: 2017/10/27 15:09:39 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/02 11:59:08 by lfourque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <iostream>
 # include <fstream>
 # include <OpenGL/gl3.h>
-// # include "../math3d.hpp"
 # include <gtc/matrix_transform.hpp>
 # include <gtc/type_ptr.hpp>
 
@@ -31,13 +30,18 @@ class Shader {
         void            setModel(glm::mat4 model) const;
         void            setFloat(const std::string &name, float value) const;
         void            setInt(const std::string &name, float value) const;
+		void			setVec3(const std::string &name, float x, float y, float z) const;
         GLuint          getProgramID() const;
         static void     setCamera(glm::mat4);
         void            setView();
+        void            setView(glm::mat4);
+        glm::mat4       getViewMatrix();
         void            setOrthoView(float, float);
         
-        Shader();
+        static glm::mat4    perspective;
+        
     private:
+        Shader();
         GLuint      load(GLenum , std::string);
         void        compile();
 
@@ -45,7 +49,6 @@ class Shader {
         bool        checkProgramCompilation(GLuint);
 
         static glm::mat4    camera;
-        static glm::mat4    perspective;
         GLuint          vertexID;
         GLuint          fragmentID;
         GLuint          geometryID;

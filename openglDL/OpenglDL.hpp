@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 10:09:52 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/03 16:39:36 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../shared/IgraphLib.hpp"
 # include "Shader.class.hpp"
 # include "Model.class.hpp"
+# include "Skybox.hpp"
 
 
 # include <iostream>
@@ -67,6 +68,7 @@ class OpenglDL : public IgraphLib {
 		Model			*bodyModel;
 		Model			*foodModel;
 		Model			*sceneryModel;
+		Skybox			*skybox;
 };
 
 extern "C" {
