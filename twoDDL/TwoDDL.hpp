@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 10:36:02 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/03 11:46:44 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <deque>
 
 # include <SDL.h>
+# include <SDL_ttf.h>
 
 # define WINDOW_SIZE_X	1024
 # define WINDOW_SIZE_Y	1024
@@ -42,6 +43,7 @@ class TwoDDL : public IgraphLib {
 		void	initScenery();
 		void	createRectangle(std::vector<SDL_Rect> &);
 		void	updateRectangles();
+		void	initGameOverStr();
 
 		int	mapSizeX;
 		int mapSizeY;
@@ -52,6 +54,11 @@ class TwoDDL : public IgraphLib {
 		SDL_Event		events;
 		SDL_Window		*win;
 		SDL_Renderer	*renderer;
+
+		TTF_Font		*font;
+		SDL_Surface		*gameOverStr;
+		SDL_Texture		*fontText;
+		SDL_Rect		fontRect;
 		
 		unsigned int	offsetX;
 		unsigned int	offsetY;

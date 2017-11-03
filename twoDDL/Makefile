@@ -6,7 +6,7 @@
 #    By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/30 11:14:16 by tpierron          #+#    #+#              #
-#    Updated: 2017/10/31 10:19:44 by tpierron         ###   ########.fr        #
+#    Updated: 2017/11/03 11:10:05 by tpierron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,18 @@ OBJ_NAME = $(SRC:.cpp=.o)
 SDL = -L/Users/$(LOGNAME)/.brew/lib -lSDL2
 SDL_PATH = -I/Users/$(LOGNAME)/.brew/include/SDL2
 
+SDLTTF = -L/Users/$(LOGNAME)/.brew/lib -lSDL2_ttf
+SDLTTF_PATH = -I/Users/$(LOGNAME)/.brew/include/SDL2_ttf
+
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
 all: $(LIBNAME)
 $(OBJ_PATH)%.o: %.cpp
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CC) $(CFLAGS) -o $@ -c $(SDL_PATH) $< -std=c++11
+	$(CC) $(CFLAGS) -o $@ -c $(SDL_PATH) $(SDLTTF_PATH) $< -std=c++11
 
 $(LIBNAME): $(OBJ)
-	$(CC) -shared -fPIC $(SDL) $(CFLAGS) -o $@ $^
+	$(CC) -shared -fPIC $(SDL) $(SDLTTF) $(CFLAGS) -o $@ $^
 
 clean:
 	rm -rf $(OBJ_PATH)

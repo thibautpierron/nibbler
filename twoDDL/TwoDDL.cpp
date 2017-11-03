@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 10:34:36 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/03 11:54:10 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,29 @@
 TwoDDL::TwoDDL(int mapSizeX, int mapSizeY) :
 	mapSizeX(mapSizeX), mapSizeY(mapSizeY) {
         
-        initSDL();
-        setOffset();
-        initScenery();
-        createRectangle(foodRect);
-        createRectangle(foodRect);
+    initSDL();
+    setOffset();
+    initScenery();
+    initGameOverStr();
+
+    createRectangle(foodRect);
+    createRectangle(foodRect);
+}
+
+void    TwoDDL::initGameOverStr() {
+    TTF_Init();
+
+    font = TTF_OpenFont("twoDDL/oasis.TTF", 50);
+    
+    SDL_Color color = {0, 0, 0, 0};
+    gameOverStr = TTF_RenderText_Solid(font, "GAME OVER", color);
+    
+    fontText = SDL_CreateTextureFromSurface(renderer, gameOverStr);
+    
+    fontRect.x = (WINDOW_SIZE_X - 250) / 2;
+    fontRect.y = (WINDOW_SIZE_Y - 100) / 2;
+    fontRect.w = 250;
+    fontRect.h = 100;
 }
 
 TwoDDL::~TwoDDL() {
@@ -34,8 +52,11 @@ TwoDDL::~TwoDDL() {
 }
 
 void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver) {
-    if (gameOver)
+    if (gameOver) {
+        SDL_RenderCopy(renderer, fontText, NULL, &fontRect);
+        SDL_RenderPresent(renderer);
         return;
+    }
 
     this->food = food;
     this->snake = snake;
@@ -77,9 +98,6 @@ void    TwoDDL::updateRectangles() {
         snakeRect[i].y = snake[i].y * SQUARE_SIZE + SQUARE_SIZE + offsetY;
     }
 
-    // while (foodRect.size() != food.size()) {
-    //     createRectangle(foodRect);
-    // }
     for (unsigned int i = 0; i < food.size(); i++) {
         foodRect[i].x = food[i].x * SQUARE_SIZE + SQUARE_SIZE + offsetX;
         foodRect[i].y = food[i].y * SQUARE_SIZE + SQUARE_SIZE + offsetY;
