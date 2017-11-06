@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/31 17:00:54 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 10:09:08 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 	//draw food
 	wattron(this->map, COLOR_PAIR(35));
 	for (size_t i= 0; i < food.size(); i++)
-		mvwprintw(this->map, _mapY - food[i].y, 2 * (food[i].x)+ 1, "%c", "\u2655");
+		mvwprintw(this->map, food[i].y, 2 * (food[i].x)+ 1, "%c", "\u2655");
 	wattroff(this->map, COLOR_PAIR(35));
 	//draw snake
 	wattron(this->map, COLOR_PAIR(38));
 	for(size_t i = 0; i < snake.size(); i++)
-			mvwprintw(this->map, _mapY - snake[i].y, 2 * snake[i].x + 1, "%c", "\u2655");
+			mvwprintw(this->map, snake[i].y, 2 * snake[i].x + 1, "%c", "\u2655");
 	wattroff(this->map, COLOR_PAIR(38));
 	//draw head
 	wattron(this->map, COLOR_PAIR(37));
-	mvwprintw(this->map, _mapY - snake[0].y, 2 * snake[0].x + 1, "%c", "\u2655");
+	mvwprintw(this->map, snake[0].y, 2 * snake[0].x + 1, "%c", "\u2655");
 	wattroff(this->map, COLOR_PAIR(37));
 	this->makeBorder();
 }
