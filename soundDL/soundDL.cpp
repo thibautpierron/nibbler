@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   soundDL.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:13:13 by mchevall          #+#    #+#             */
-/*   Updated: 2017/10/31 14:26:38 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 15:11:42 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ soundDL::soundDL(bool volume)
 	_sfx = NULL;
 	int flags = MIX_INIT_OGG;
 	Mix_Init(flags);
-	Mix_AllocateChannels(2);
 	if (Mix_OpenAudio(_frequency, _format, _channels, _chunksize) == -1)
-	std::cerr << "Error : " << Mix_GetError() << std::endl;
+		std::cerr << "Error : " << Mix_GetError() << std::endl;
+	Mix_AllocateChannels(2);
 	Mix_VolumeMusic(_volume);
 	Mix_Volume(1,_volume);
 	Mix_Volume(2,_volume);
@@ -81,25 +81,25 @@ void			soundDL::playSound(SoundAction::Enum action)
 			Mix_Volume(2,_volume);
 			break;
 		case SoundAction::DEATH:
-			if ((_sfx = Mix_LoadWAV(_deathfile)) == NULL)
+			if ((_sfx = Mix_LoadWAV(_deathfile.c_str())) == NULL)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			if (Mix_PlayChannel(1, _sfx, 0) == -1)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			break;
 		case SoundAction::EAT:
-			if ((_sfx = Mix_LoadWAV(_eatfile)) == NULL)
+			if ((_sfx = Mix_LoadWAV(_eatfile.c_str())) == NULL)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			if (Mix_PlayChannel(2, _sfx, 0) == -1)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			break;
 		case SoundAction::MUSIC:
-			if ((_music = Mix_LoadMUS(_musicfile)) == NULL)
+			if ((_music = Mix_LoadMUS(_musicfile.c_str())) == NULL)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			if (Mix_PlayMusic(_music, -1) == -1)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			break;
 		case SoundAction::OPENING:
-			if ((_sfx = Mix_LoadWAV(_openingfile)) == NULL)
+			if ((_sfx = Mix_LoadWAV(_openingfile.c_str())) == NULL)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;
 			if (Mix_PlayChannel(1, _sfx, 0) == -1)
 				std::cerr << "Error : " << Mix_GetError() << std::endl;

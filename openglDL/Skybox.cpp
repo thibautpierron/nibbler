@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 10:37:37 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 13:40:12 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 14:12:06 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Skybox::~Skybox() {
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
 	glDeleteTextures(1, &textureID);
+	delete shader;
 	return;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TwoDDL.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 11:21:16 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 14:26:46 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ TwoDDL::~TwoDDL() {
     // for (unsigned int i = 0; i < rectangles.size(); i++) {
     //     SDL_FreeSurface(rectangles[i]);
     // }
+
+    TTF_CloseFont(font);
+    TTF_Quit();
+
+    SDL_FreeSurface(gameOverStr);
+    SDL_DestroyTexture(fontText);
+    SDL_Quit();
+
     SDL_Quit();
 
 	return;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 14:25:05 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 15:15:48 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nibbler.hpp"
 
-bool is_digits(const std::string &str) {
+static bool is_digits(const std::string &str) {
     return (str.find_first_not_of("0123456789") == std::string::npos);
 }
 

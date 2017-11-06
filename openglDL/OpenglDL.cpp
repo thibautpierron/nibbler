@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 13:24:08 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 14:15:13 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ OpenglDL::~OpenglDL() {
     delete foodModel;
     delete sceneryModel;
     delete skybox;
+    delete glString;
 
 	SDL_GL_DeleteContext(ctx);
     SDL_DestroyWindow(win);
@@ -57,8 +58,6 @@ void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool game
     setCamera();
     skybox->draw();
     
-    // shader->use();
-    
     drawHead();
     drawBody();
     drawScenery();
@@ -66,7 +65,9 @@ void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool game
     drawFood();
     
     if (gameOver)
-        this->glString->renderText("GAME OVER", (WINDOW_SIZE_X - 9 * 48) / 2, (WINDOW_SIZE_Y + 48) / 2, glm::vec3(0.2f, 0.4f, 1.f));
+        this->glString->renderText("GAME OVER",
+                                    (WINDOW_SIZE_X - 9 * 48) / 2, (WINDOW_SIZE_Y + 48) / 2,
+                                    glm::vec3(0.2f, 0.4f, 1.f));
     
 	SDL_GL_SwapWindow(win);
 }
@@ -80,10 +81,10 @@ void	OpenglDL::initSDL() {
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     win = SDL_CreateWindow("Nibbler",
-                                        SDL_WINDOWPOS_UNDEFINED,
-                                        SDL_WINDOWPOS_UNDEFINED,
-                                        WINDOW_SIZE_X, WINDOW_SIZE_Y,
-                                        SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+                            SDL_WINDOWPOS_UNDEFINED,
+                            SDL_WINDOWPOS_UNDEFINED,
+                            WINDOW_SIZE_X, WINDOW_SIZE_Y,
+                            SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
     ctx = SDL_GL_CreateContext(win);
     SDL_RaiseWindow(win);
     if(ctx == 0) {
@@ -144,7 +145,6 @@ void        OpenglDL::drawBody() {
     for (unsigned int i = 1; i < snake.size(); i++) {
         glm::mat4 transform = glm::mat4();
         transform = glm::translate(transform, glm::vec3(snake[i].x * 2, 0.f, snake[i].y * 2));
-        // transform = glm::rotate(transform, glm::radians(90.f), glm::vec3(1.f, 0.f, 0.f));
         transform = glm::rotate(transform, findBodyOrientation(i, triggerCounter), glm::vec3(0.f, 1.f, 0.f));
         data.push_back(transform);
     }
