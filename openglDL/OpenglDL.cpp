@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 10:43:37 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 13:24:08 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool game
     setCamera();
     skybox->draw();
     
-    shader->use();
+    // shader->use();
     
     drawHead();
     drawBody();
@@ -148,6 +148,7 @@ void        OpenglDL::drawBody() {
         transform = glm::rotate(transform, findBodyOrientation(i, triggerCounter), glm::vec3(0.f, 1.f, 0.f));
         data.push_back(transform);
     }
+    shader->use();
     bodyModel->setInstanceBuffer(data);
 
     bodyModel->draw(shader, snake.size() - 1);
@@ -168,8 +169,10 @@ void        OpenglDL::drawScenery() {
 
     glm::mat4 transform = glm::mat4();
     transform = glm::translate(transform, glm::vec3(mapSizeX, -1.f, mapSizeY));
-    transform = glm::scale(transform, glm::vec3(mapSizeX + 3, 0.f, mapSizeY + 3));
+    transform = glm::scale(transform, glm::vec3(mapSizeX + 3, 0.5f, mapSizeY + 3));
     data.push_back(transform);
+
+    shader->use();
 
     sceneryModel->setInstanceBuffer(data);
 
@@ -183,6 +186,9 @@ void        OpenglDL::drawHead() {
     transform = glm::translate(transform, glm::vec3(snake[0].x * 2, 0.f, snake[0].y * 2));
     transform = glm::rotate(transform, glm::radians(findHeadOrientation()), glm::vec3(0.f, 1.f, 0.f));
     data.push_back(transform);
+
+    shader->use();
+
     headModel->setInstanceBuffer(data);
     
     headModel->draw(shader, 1);
