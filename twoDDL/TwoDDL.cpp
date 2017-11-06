@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   TwoDDL.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 11:54:10 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 11:21:16 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	TwoDDL::initSDL() {
                             WINDOW_SIZE_X, WINDOW_SIZE_Y,
                             SDL_WINDOW_SHOWN);
 
+    SDL_RaiseWindow(win);
     renderer =  SDL_CreateRenderer( win, -1, SDL_RENDERER_ACCELERATED);
 	SDL_RenderSetLogicalSize( renderer, WINDOW_SIZE_X, WINDOW_SIZE_Y );
     SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
@@ -178,7 +179,7 @@ Action::Enum    TwoDDL::eventManager() {
 
 const char	*TwoDDL::toString()
 {
-	return ("TwoDDL/TwoDDL.so");
+	return ("twoDDL/TwoDDL.so");
 }
 
 TwoDDL	    *initContext(int mapSizeX, int mapSizeY) {

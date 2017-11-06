@@ -6,7 +6,7 @@
 #    By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/26 14:02:22 by fdexheim          #+#    #+#              #
-#    Updated: 2017/10/31 16:22:44 by mchevall         ###   ########.fr        #
+#    Updated: 2017/11/06 11:27:44 by mchevall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,12 +62,13 @@ fclean:		clean
 	make -C $(LIB1PATH) fclean
 	make -C $(LIB2PATH) fclean
 	make -C $(LIB3PATH) fclean
-	make -C $(LIBSOUNDPATH) fclean		
+	make -C $(LIBSOUNDPATH) fclean
 	rm -f $(NAME)
 
 re:			fclean all
 
-install:	all
+install:
 	./script.sh
+	make
 
 .PHONY:		all clean fclean re lib1 lib2 lib3 libsound install
