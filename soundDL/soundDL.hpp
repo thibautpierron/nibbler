@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   soundDL.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 15:13:51 by mchevall          #+#    #+#             */
-/*   Updated: 2017/11/06 14:49:24 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 18:24:57 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ private:
 	int			_channels;
 	int			_chunksize;
 	Mix_Music*	_music;
-	Mix_Chunk*	_sfx;
+	Mix_Chunk*	_sfxeat;
+	Mix_Chunk*	_sfxdeath;
+	Mix_Chunk*	_sfxopening;
 	std::string	_musicfile;
 	std::string	_deathfile;
 	std::string	_eatfile;
 	std::string	_openingfile;
 	int			_volume;
-
 };
 
 
