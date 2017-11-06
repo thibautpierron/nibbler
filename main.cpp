@@ -6,11 +6,15 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 11:24:39 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 14:25:05 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nibbler.hpp"
+
+bool is_digits(const std::string &str) {
+    return (str.find_first_not_of("0123456789") == std::string::npos);
+}
 
 static void     checkParameters(int ac, char **av) {
     if (ac != 3) {
@@ -18,6 +22,17 @@ static void     checkParameters(int ac, char **av) {
         exit(EXIT_FAILURE);
     }
 
+    if (!is_digits(av[1]))
+    {
+        std::cerr << "error: invalid parameters" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    
+    if (!is_digits(av[2]))
+    {
+        std::cerr << "error: invalid parameters" << std::endl;
+        exit(EXIT_FAILURE);
+    }
     long int width = strtol(av[1], NULL, 0);
     long int height = strtol(av[2], NULL, 0);
     if (width == 0L || height == 0L) {
