@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 16:47:52 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 10:43:37 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ OpenglDL::OpenglDL(int mapSizeX, int mapSizeY) :
         foodModel = new Model("./openglDL/food.obj", false);
         sceneryModel = new Model("./openglDL/wall.obj", false);
         skybox = new Skybox("openglDL/skybox");
+        glString = new GLString();
     }
 
 OpenglDL::~OpenglDL() {
@@ -46,13 +47,13 @@ OpenglDL::~OpenglDL() {
 }
 
 void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver) {
-    if (gameOver)
-        return;
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    this->gameOver = gameOver;
+    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     this->food = food;
     this->snake = snake;
-
+    
     setCamera();
     skybox->draw();
     
@@ -61,9 +62,11 @@ void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool game
     drawHead();
     drawBody();
     drawScenery();
-
+    
     drawFood();
     
+    if (gameOver)
+        this->glString->renderText("GAME OVER", (WINDOW_SIZE_X - 9 * 48) / 2, (WINDOW_SIZE_Y + 48) / 2, glm::vec3(0.2f, 0.4f, 1.f));
     
 	SDL_GL_SwapWindow(win);
 }
@@ -79,7 +82,7 @@ void	OpenglDL::initSDL() {
     win = SDL_CreateWindow("Nibbler",
                                         SDL_WINDOWPOS_UNDEFINED,
                                         SDL_WINDOWPOS_UNDEFINED,
-                                        1024, 1024,
+                                        WINDOW_SIZE_X, WINDOW_SIZE_Y,
                                         SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
     ctx = SDL_GL_CreateContext(win);
     SDL_RaiseWindow(win);
@@ -100,13 +103,13 @@ void	OpenglDL::initGL() {
 }
 
 void    OpenglDL::initScenery() {
-    for(int i = 0; i < mapSizeX; i++) {
-        scenery.push_back(Vec2(i, -1));
-        scenery.push_back(Vec2(i, mapSizeY));
+    for(int i = -1; i <= mapSizeX; i++) {
+        scenery.push_back(Vec2(i, -2));
+        scenery.push_back(Vec2(i, mapSizeY + 1));
     }
-    for(int i = 0; i < mapSizeY; i++) {
-        scenery.push_back(Vec2(-1, i));
-        scenery.push_back(Vec2(mapSizeX, i));
+    for(int i = -1; i <= mapSizeY; i++) {
+        scenery.push_back(Vec2(-2, i));
+        scenery.push_back(Vec2(mapSizeX + 1, i));
     }
 }
 
@@ -150,7 +153,8 @@ void        OpenglDL::drawBody() {
     bodyModel->draw(shader, snake.size() - 1);
     if (triggerCounter > 40)
         triggerCounter = 0;
-    triggerCounter++;
+    if (!gameOver)
+        triggerCounter++;
 }
 
 void        OpenglDL::drawScenery() {
@@ -164,7 +168,7 @@ void        OpenglDL::drawScenery() {
 
     glm::mat4 transform = glm::mat4();
     transform = glm::translate(transform, glm::vec3(mapSizeX, -1.f, mapSizeY));
-    transform = glm::scale(transform, glm::vec3(mapSizeX + 2, 0.f, mapSizeY + 2));
+    transform = glm::scale(transform, glm::vec3(mapSizeX + 3, 0.f, mapSizeY + 3));
     data.push_back(transform);
 
     sceneryModel->setInstanceBuffer(data);
@@ -218,14 +222,12 @@ void        OpenglDL::drawFood() {
 
 void        OpenglDL::setCamera() {
     glm::mat4 camera = glm::lookAt(
-        glm::vec3(mapSizeX, mapSizeY * 1.5f, mapSizeY * 2),
+        glm::vec3(mapSizeX, mapSizeY * 1.5f, mapSizeY * 2 + 10),
         glm::vec3(snake[0].x * 2, 0.f, snake[0].y * 2),
         glm::vec3(0.f, 1.f, 0.f)
     );
     shader->setCamera(camera);
     shader->setView();
-    // textureShader->setCamera(camera);
-    // textureShader->setView();
 }
 
 const char	*OpenglDL::toString()

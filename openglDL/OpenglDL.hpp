@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 16:39:36 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 10:30:13 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../shared/IgraphLib.hpp"
 # include "Shader.class.hpp"
 # include "Model.class.hpp"
+# include "GLString.hpp"
 # include "Skybox.hpp"
 
 
@@ -25,6 +26,9 @@
 
 # include <OpenGL/gl3.h>
 # include <SDL.h>
+
+# define WINDOW_SIZE_X	1024
+# define WINDOW_SIZE_Y	1024
 
 class OpenglDL : public IgraphLib {
 	public:
@@ -69,6 +73,9 @@ class OpenglDL : public IgraphLib {
 		Model			*foodModel;
 		Model			*sceneryModel;
 		Skybox			*skybox;
+		GLString		*glString;
+
+		bool			gameOver;
 };
 
 extern "C" {
