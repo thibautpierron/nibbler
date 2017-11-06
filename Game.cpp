@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 16:24:50 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 10:08:52 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,9 +238,9 @@ void	Game::catchLibChange(Action::Enum action)
 
 void	Game::getNextMoveDirection(Action::Enum action) {
 	if(action == Action::LEFT)
-		direction =  static_cast<Direction>((direction - 1) % 4);
-	else if(action == Action::RIGHT)
 		direction =  static_cast<Direction>((direction + 1) % 4);
+	else if(action == Action::RIGHT)
+		direction =  static_cast<Direction>((direction - 1) % 4);
 
 	if (direction < 0)
 		direction = WEST;
