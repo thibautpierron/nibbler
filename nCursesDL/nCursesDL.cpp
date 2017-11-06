@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/11/06 12:54:26 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 13:35:01 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 	//draw food
 	wattron(this->map, COLOR_PAIR(35));
 	for (size_t i= 0; i < food.size(); i++)
-		mvwprintw(this->map, food[i].y, 2 * (food[i].x)+ 1, "%c", "\u2655");
+		mvwprintw(this->map, food[i].y + 1, 2 * (food[i].x)+ 1, "%c", "\u2655");
 	wattroff(this->map, COLOR_PAIR(35));
 	//draw snake
 	wattron(this->map, COLOR_PAIR(38));
