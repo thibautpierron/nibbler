@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 10:08:52 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 12:52:05 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,34 +206,26 @@ bool		Game::checkSnakeCollision() {
 
 void	Game::catchLibChange(Action::Enum action)
 {
-	if (action == Action::LIB1 && std::strcmp(currentlib->toString(), lib1))
+	if (action == Action::LIB1 || action == Action::LIB2 || action == Action::LIB3)
 	{
-		destroyContext(currentlib);
-		destroyContextSound(currentlibsound);
-		initLibSound(libsound1);
-		currentlibsound->playSound(SoundAction::MUSIC);
-		initLib(lib1);
+		const char *lib;
+		if (action == Action::LIB1)
+			lib = const_cast<char *>(lib1);
+		else if (action == Action::LIB2)
+			lib = const_cast<char *>(lib2);
+		else if (action == Action::LIB3)
+			lib = const_cast<char *>(lib3);
+		if (std::strcmp(currentlib->toString(), lib))
+		{
+			destroyContext(currentlib);
+			destroyContextSound(currentlibsound);
+			initLibSound(libsound1);
+			currentlibsound->playSound(SoundAction::MUSIC);
+			initLib(lib);
+
+			usleep(1500000);
+		}
 	}
-	else if (action == Action::LIB2 && std::strcmp(currentlib->toString(), lib2))
-	{
-		destroyContext(currentlib);
-		destroyContextSound(currentlibsound);
-		initLibSound(libsound1);
-		currentlibsound->playSound(SoundAction::MUSIC);
-		initLib(lib2);
-	}
-	else if (action == Action::LIB3 && std::strcmp(currentlib->toString(), lib3))
-	{
-		destroyContext(currentlib);
-		destroyContextSound(currentlibsound);
-		initLibSound(libsound1);
-		currentlibsound->playSound(SoundAction::MUSIC);
-		initLib(lib3);
-	}
-	else
-		return;
-	usleep(1500000);
-		
 }
 
 void	Game::getNextMoveDirection(Action::Enum action) {
