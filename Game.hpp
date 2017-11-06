@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:04:49 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/31 16:10:17 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 13:43:00 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <deque>
 # include <iostream>
 # include <dlfcn.h>
+# include <stdexcept>
 # include "shared/IgraphLib.hpp"
 # include "frameTimer.class.hpp"
 # include "./shared/IsoundLib.hpp"

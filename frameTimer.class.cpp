@@ -6,17 +6,14 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/08 13:43:00 by fdexheim          #+#    #+#             */
-/*   Updated: 2017/10/25 16:15:15 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 14:04:09 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "frameTimer.class.hpp"
 
-//------------------------------------------------------------------------------
 frameTimer::frameTimer() { _nb_frameTimer++; return; }
-//------------------------------------------------------------------------------
 frameTimer::~frameTimer() { _nb_frameTimer--; return; }
-//------------------------------------------------------------------------------
 frameTimer::frameTimer(frameTimer const & src)
 {
 	_nb_frameTimer++;
@@ -24,7 +21,6 @@ frameTimer::frameTimer(frameTimer const & src)
 	return;
 }
 
-//------------------------------------------------------------------------------
 frameTimer::frameTimer(float fpsInit) : fps(fpsInit)
 {
 	_nb_frameTimer++;
@@ -37,7 +33,6 @@ frameTimer::frameTimer(float fpsInit) : fps(fpsInit)
 	return;
 }
 
-//------------------------------------------------------------------------------
 frameTimer&		frameTimer::operator=(frameTimer const &src)
 {
 	this->fps = src.fps;
@@ -50,14 +45,12 @@ frameTimer&		frameTimer::operator=(frameTimer const &src)
 }
 
 
-//------------------------------------------------------------------------------
 void			frameTimer::updateTimeBeginningLoop()
 {
 	this->frameNumber++;
 	this->beg = std::clock();
 }
 
-//------------------------------------------------------------------------------
 void			frameTimer::updateTimeEndLoop()
 {
 	double diff;

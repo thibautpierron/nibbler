@@ -6,7 +6,7 @@
 /*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 12:52:05 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/06 14:00:22 by mchevall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Game::Game(int mapSizeX, int mapSizeY, const char *libnames[4]) : lib1(libnames[
 	volume = true;
 	
 	initLibSound(libsound1);
-	initLib(lib2);
+	initLib(lib1);
 	initSnake();
 	generateFood();
 	generateFood();
@@ -52,19 +52,18 @@ void	Game::restart() {
 
 void	Game::initLibSound(const char *soundlib)
 {
-	if ((this->dlHandleSound = dlopen(soundlib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
+	try
 	{
-		std::cerr << "Error : " << dlerror() << std::endl;
-		exit(EXIT_FAILURE);
+		if ((this->dlHandleSound = dlopen(soundlib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
+			throw std::runtime_error(dlerror());
+		if ((this->initContextSound = (IsoundLib *(*)(bool))dlsym(dlHandleSound, "initContext")) == NULL)
+			throw std::runtime_error(dlerror());
+		if((this->destroyContextSound = (void(*)(IsoundLib *))dlsym(dlHandleSound, "destroyContext")) == NULL)
+			throw std::runtime_error(dlerror());
 	}
-	if ((this->initContextSound = (IsoundLib *(*)(bool))dlsym(dlHandleSound, "initContext")) == NULL)
+	catch(std::exception &e)
 	{
-		std::cerr << "Error : " << dlerror() << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	if((this->destroyContextSound = (void(*)(IsoundLib *))dlsym(dlHandleSound, "destroyContext")) == NULL)
-	{
-		std::cerr << "Error : " << dlerror() << std::endl;
+		std::cerr << e.what() << std::endl;
 		exit(EXIT_FAILURE);
 	}
 	currentlibsound = this->initContextSound(volume);
@@ -73,19 +72,18 @@ void	Game::initLibSound(const char *soundlib)
 
 void	Game::initLib(const char *lib)
 {
-	if ((this->dlHandle = dlopen(lib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
+	try
 	{
-		std::cerr << "Error : " << dlerror() << std::endl;
-		exit(EXIT_FAILURE);
+		if ((this->dlHandle = dlopen(lib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
+			throw std::runtime_error(dlerror());
+		if ((this->initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext")) == NULL)
+			throw std::runtime_error(dlerror());
+		if ((this->destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext")) == NULL)
+			throw std::runtime_error(dlerror());
 	}
-	if ((this->initContext = (IgraphLib *(*)(int, int))dlsym(dlHandle, "initContext")) == NULL)
+	catch (std::exception &e)
 	{
-		std::cerr << "Error : " << dlerror() << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	if ((this->destroyContext = (void(*)(IgraphLib *))dlsym(dlHandle, "destroyContext")) == NULL)
-	{
-		std::cerr << "Error : " << dlerror() << std::endl;
+		std::cerr << e.what() << std::endl;
 		exit(EXIT_FAILURE);
 	}
 	currentlib = initContext(mapSizeX,mapSizeY);
