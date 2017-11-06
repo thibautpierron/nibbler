@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 14:26:46 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/06 16:01:18 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,12 @@ void    TwoDDL::initGameOverStr() {
 }
 
 TwoDDL::~TwoDDL() {
-
-    // for (unsigned int i = 0; i < rectangles.size(); i++) {
-    //     SDL_FreeSurface(rectangles[i]);
-    // }
-
     TTF_CloseFont(font);
     TTF_Quit();
 
     SDL_FreeSurface(gameOverStr);
     SDL_DestroyTexture(fontText);
+    SDL_DestroyRenderer(renderer);
     SDL_Quit();
 
     SDL_Quit();
