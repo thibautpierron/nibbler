@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/11/07 11:40:38 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 13:54:23 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ nCursesDL::nCursesDL(int mapX, int mapY) : _mapX(mapX), _mapY(mapY)
 	system("osascript termresizing");
 	flushinp();
 	setup_ncurses();
-	this->map = subwin(stdscr, (this->_mapY+2), 2 * this->_mapX + 2, 0, 0);
+	this->map = subwin(stdscr, (this->_mapY + 2), 2 * (this->_mapX + 1), 0, 0);
 	makeBorder();
 }
 
@@ -45,9 +45,25 @@ nCursesDL &	nCursesDL::operator=( nCursesDL const & rhs )
 
 void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver)
 {
-	//draw map
-	if (gameOver)
-	{
+	for (int i = 1; i <= 2 * this->_mapX+2; i++)
+	for (int j = 1; j < this->_mapY+2; j++)
+		mvwprintw(this->map, j, i,"%c", ' ');
+	
+	wattron(this->map, COLOR_PAIR(35));
+	for (size_t i= 0; i < food.size(); i++)
+	mvwprintw(this->map, food[i].y + 1, 2 * (food[i].x)+ 1, "%s", "  ");
+	wattroff(this->map, COLOR_PAIR(35));
+	
+	wattron(this->map, COLOR_PAIR(38));
+	for(size_t i = 0; i < snake.size(); i++)
+	mvwprintw(this->map, snake[i].y + 1, 2 * snake[i].x + 1, "%s", "  ");
+	wattroff(this->map, COLOR_PAIR(38));
+	
+	wattron(this->map, COLOR_PAIR(37));
+	mvwprintw(this->map, snake[0].y + 1, 2 * snake[0].x + 1, "%s", "  ");
+	wattroff(this->map, COLOR_PAIR(37));
+	
+	if (gameOver) {
 		int midscreenY = (_mapY + 2) / 2;
 		int midscreenX = (_mapX + 2);
 		wattron(this->map, COLOR_PAIR(25));
@@ -55,26 +71,7 @@ void			nCursesDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool g
 		mvwprintw(this->map, midscreenY , midscreenX - 13/2,"%s", "PRESS \"SPACE\"");
 		mvwprintw(this->map, midscreenY + 2, midscreenX - 13/2,"%s", "TO PLAY AGAIN");
 		wattroff(this->map, COLOR_PAIR(25));
-		this->makeBorder();
-		return ;
 	}
-	for (int i = 1; i <= 2 * this->_mapX+2; i++)
-		for (int j = 1; j < this->_mapY+2; j++)
-			mvwprintw(this->map, j, i,"%c", ' ');
-	//draw food
-	wattron(this->map, COLOR_PAIR(35));
-	for (size_t i= 0; i < food.size(); i++)
-		mvwprintw(this->map, food[i].y + 1, 2 * (food[i].x)+ 1, "%c", "\u2655");
-	wattroff(this->map, COLOR_PAIR(35));
-	//draw snake
-	wattron(this->map, COLOR_PAIR(38));
-	for(size_t i = 0; i < snake.size(); i++)
-			mvwprintw(this->map, snake[i].y + 1, 2 * snake[i].x + 1, "%c", "\u2655");
-	wattroff(this->map, COLOR_PAIR(38));
-	//draw head
-	wattron(this->map, COLOR_PAIR(37));
-	mvwprintw(this->map, snake[0].y + 1, 2 * snake[0].x + 1, "%c", "\u2655");
-	wattroff(this->map, COLOR_PAIR(37));
 	this->makeBorder();
 }
 
@@ -83,8 +80,7 @@ int					nCursesDL::checkInput() const
 	int				input;
 
 	input = getch();
-	if (input != ERR)
-	{
+	if (input != ERR) {
 		ungetch(input);
 		return (1);
 	}
