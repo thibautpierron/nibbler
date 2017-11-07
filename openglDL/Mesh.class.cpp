@@ -55,6 +55,12 @@ Mesh::Mesh(Mesh const & src) {
 	*this = src;
 }
 
+Mesh & Mesh::operator=( Mesh const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
+}
+
 Mesh::~Mesh() {
 	glDeleteBuffers(1, &this->vbo);
 	glDeleteBuffers(1, &this->ebo);

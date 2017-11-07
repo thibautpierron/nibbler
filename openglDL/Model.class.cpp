@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Model.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 10:02:40 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 15:07:16 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:47:44 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ Model::~Model() {
 	Model::i--;
 	// std::cout << "MODEL DESTRUCT: " << Model::i << std::endl;
 	return;
+}
+
+Model::Model(Model const & src) {
+	*this = src;
+	return;
+}
+
+Model & Model::operator=( Model const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
 }
 
 std::vector<glm::mat4>  Model::getKeyFrame(aiAnimation *animation) {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Joint.class.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thibautpierron <thibautpierron@student.    +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 09:16:40 by tpierron          #+#    #+#             */
-/*   Updated: 2017/09/05 17:11:13 by thibautpier      ###   ########.fr       */
+/*   Updated: 2017/11/07 14:46:46 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ Joint::~Joint() {
 	return;
 }
 
+Joint::Joint(Joint const & src) {
+	*this = src;
+	return;
+}
+
+Joint & Joint::operator=( Joint const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
+}
 void	Joint::addChild(Joint *child) {
 	this->children.push_back(child);
 }

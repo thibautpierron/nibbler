@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 14:11:27 by thibautpier       #+#    #+#             */
-/*   Updated: 2017/11/02 11:58:50 by lfourque         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:48:22 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ Shader::~Shader() {
         glDeleteShader(this->geometryID);
     glDeleteProgram(this->programID);
     return;
+}
+
+Shader::Shader(Shader const & src) {
+	*this = src;
+	return;
+}
+
+Shader & Shader::operator=( Shader const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
 }
 
 GLuint    Shader::load(GLenum type, std::string const src) {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mesh.class.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:54:43 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/27 15:06:55 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:43:16 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ class Mesh {
         Mesh(std::vector<Vertex>, std::vector<unsigned int>,
                 std::vector<Texture>, aiColor3D color, 
                 Joint *rootJoint, unsigned int jointNbr);
+        virtual ~Mesh();
         Mesh(Mesh const & src);
-        ~Mesh();
+        Mesh & operator=(Mesh const &);
     
 
 		void	draw(Shader *shader, bool animated, unsigned int instanceCount);

@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 14:11:32 by thibautpier       #+#    #+#             */
-/*   Updated: 2017/11/06 10:11:50 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:45:39 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ class Shader {
     public:
         Shader(std::string vertexSrc, std::string fragmentSrc);
         Shader(std::string vertexSrc, std::string geometrySrc, std::string fragmentSrc);
-        ~Shader();
+        virtual ~Shader();
+        Shader(Shader const & src);
+		Shader & operator=(Shader const &);
         
         void            use() const;
         void            setModel(glm::mat4 model) const;

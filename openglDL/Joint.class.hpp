@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 09:15:17 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/19 16:25:08 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:43:48 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 class Joint {
 	public:
 		Joint(unsigned int index, std::string name, glm::mat4 bindLocalTransform);
-		~Joint();
+		virtual ~Joint();
+		Joint(Joint const &);
+		Joint & operator=(Joint const &);
 
 		void		addChild(Joint *child);
 		glm::mat4	getAnimatedTransform() const;

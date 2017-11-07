@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 14:04:16 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:48:03 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ OpenglDL::~OpenglDL() {
     SDL_Quit();
 
 	return;
+}
+
+OpenglDL::OpenglDL(OpenglDL const & src) {
+	*this = src;
+	return;
+}
+
+OpenglDL & OpenglDL::operator=( OpenglDL const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
 }
 
 void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver) {

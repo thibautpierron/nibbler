@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 10:35:17 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/23 17:35:34 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:45:34 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 class Skybox {
 	public:
 		Skybox(std::string directory);
-		~Skybox();
+		virtual ~Skybox();
+		Skybox(Skybox const & src);
+		Skybox & operator=(Skybox const &);
 		
 		void	draw();
 		unsigned int getTextureID() const;

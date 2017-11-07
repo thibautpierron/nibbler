@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 09:40:41 by tpierron          #+#    #+#             */
-/*   Updated: 2017/10/16 14:24:59 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:43:49 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 class Model {
 	public:
 		Model(std::string path, bool animated);
-		~Model();
+		virtual ~Model();
+
+		Model(Model const & src);
+		Model & operator=(Model const &);
 
 		void	draw(Shader *shader, unsigned int instanceCount);
 		void	setInstanceBuffer(std::vector<glm::mat4> const &);

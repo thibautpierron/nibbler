@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 09:56:37 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 10:01:17 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:39:14 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ struct Character {
 class GLString {
 	public:
 		GLString();
-		~GLString();
+		virtual ~GLString();
+		GLString(GLString const &);
+		GLString & operator=(GLString const &);
+
 		void		render();
 		void		renderText(std::string str, float x, float y, glm::vec3 color) const;
 

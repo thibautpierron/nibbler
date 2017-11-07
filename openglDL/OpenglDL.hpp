@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:30 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 10:30:13 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:44:14 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ class OpenglDL : public IgraphLib {
 	public:
 		OpenglDL(int, int);
 		virtual ~OpenglDL();
+		OpenglDL(OpenglDL const & src);
+		OpenglDL & operator=(OpenglDL const &);
 
 		void					display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver);
 		virtual Action::Enum	eventManager();

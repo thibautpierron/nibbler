@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 10:37:37 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 14:12:06 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:48:34 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ Skybox::~Skybox() {
 	glDeleteTextures(1, &textureID);
 	delete shader;
 	return;
+}
+
+Skybox::Skybox(Skybox const & src) {
+	*this = src;
+	return;
+}
+
+Skybox & Skybox::operator=( Skybox const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
 }
 
 void		Skybox::draw() {
