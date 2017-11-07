@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 16:01:18 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 10:36:01 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,12 @@ TwoDDL::~TwoDDL() {
 }
 
 void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver) {
-    if (gameOver) {
-        SDL_RenderCopy(renderer, fontText, NULL, &fontRect);
-        SDL_RenderPresent(renderer);
-        return;
-    }
-
+    
     this->food = food;
     this->snake = snake;
-
+    
     updateRectangles();
-
+    
     SDL_RenderClear( renderer );
     SDL_SetRenderDrawColor( renderer, 150, 150, 150, 255 );
     
@@ -74,15 +69,21 @@ void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOv
         SDL_SetRenderDrawColor( renderer, 0, 255, 0, 255 );
         SDL_RenderFillRect( renderer, &snakeRect[i] );
     }
-
+    
     for (unsigned int i = 0; i < foodRect.size(); i++) {
         SDL_SetRenderDrawColor( renderer, 255, 0, 0, 255 );
         SDL_RenderFillRect( renderer, &foodRect[i] );
     }
-
+    
     for (unsigned int i = 0; i < sceneryRect.size(); i++) {
         SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
         SDL_RenderFillRect( renderer, &sceneryRect[i] );
+    }
+    
+    if (gameOver) {
+        SDL_RenderCopy(renderer, fontText, NULL, &fontRect);
+        // SDL_RenderPresent(renderer);
+        // return;
     }
     
     SDL_SetRenderDrawColor( renderer, 150, 150, 150, 255 );
