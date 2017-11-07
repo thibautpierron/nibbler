@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 11:25:21 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 15:15:48 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 11:36:07 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void     checkParameters(int ac, char **av) {
 int     main(int ac, char **av) {
     srand(time(NULL));
     checkParameters(ac, av);
-    const char *libnames[4] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "twoDDL/TwoDDL.so", "soundDL/soundDL.so"};
+    const char *libnames[3] = {"openglDL/OpenglDL.so", "nCursesDL/nCursesDL.so", "twoDDL/TwoDDL.so"};
 
     Game       game(atoi(av[1]),atoi(av[2]), libnames);
     Action::Enum action = Action::NONE;

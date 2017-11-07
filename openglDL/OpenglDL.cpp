@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 14:15:13 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 11:40:12 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ Action::Enum    OpenglDL::eventManager() {
                 case SDLK_1: return Action::LIB1; break;
                 case SDLK_2: return Action::LIB2; break;
                 case SDLK_3: return Action::LIB3; break;
-                case SDLK_m: return Action::SOUND; break;
                 case SDLK_SPACE: return Action::RESTART; break;
             }
         }        

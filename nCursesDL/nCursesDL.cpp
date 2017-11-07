@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nCursesDL.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 14:42:02 by mchevall          #+#    #+#             */
-/*   Updated: 2017/11/06 13:35:01 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/07 11:40:38 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ nCursesDL::nCursesDL(int mapX, int mapY) : _mapX(mapX), _mapY(mapY)
 	flushinp();
 	setup_ncurses();
 	this->map = subwin(stdscr, (this->_mapY+2), 2 * this->_mapX + 2, 0, 0);
-	// this->ui = subwin(stdscr, this->mapSize.y + 2, 100 + 2, 0, this->mapSize.x + 2);
 	makeBorder();
 }
 
@@ -115,8 +114,6 @@ Action::Enum	nCursesDL::eventManager()
 					return(Action::LIB2);
 				case 51:
 					return(Action::LIB3);
-				case 109:
-					return(Action::SOUND);
 				case 32:
 					return(Action::RESTART);
 				default:

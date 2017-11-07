@@ -3,36 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mchevall <mchevall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 14:00:22 by mchevall         ###   ########.fr       */
+/*   Updated: 2017/11/07 11:40:15 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 
-Game::Game(int mapSizeX, int mapSizeY, const char *libnames[4]) : lib1(libnames[0]), lib2(libnames[1]), lib3(libnames[2]), libsound1(libnames[3]), mapSizeX(mapSizeX), mapSizeY(mapSizeY){
+Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[0]), lib2(libnames[1]), lib3(libnames[2]), mapSizeX(mapSizeX), mapSizeY(mapSizeY){
 	gameFrameTimer = new frameTimer(60.0f);
 	gameSpeed = 5;
 	direction = NORTH;
 	action = Action::NONE;
 	foodContactFlag = false;
 	gameOver = false;
-	volume = true;
-	
-	initLibSound(libsound1);
+
 	initLib(lib1);
 	initSnake();
 	generateFood();
 	generateFood();
-
-	currentlibsound->playSound(SoundAction::OPENING);
-	currentlibsound->playSound(SoundAction::MUSIC);
 }
 
 Game::~Game() {
-	destroyContextSound(currentlibsound);
 	destroyContext(currentlib);
 	dlclose(dlHandle);
 }
@@ -49,26 +43,6 @@ void	Game::restart() {
 	gameFrameTimer->frameNumber = 0;
 	gameSpeed = 5;
 }
-
-void	Game::initLibSound(const char *soundlib)
-{
-	try
-	{
-		if ((this->dlHandleSound = dlopen(soundlib, RTLD_LAZY | RTLD_LOCAL)) == NULL)
-			throw std::runtime_error(dlerror());
-		if ((this->initContextSound = (IsoundLib *(*)(bool))dlsym(dlHandleSound, "initContext")) == NULL)
-			throw std::runtime_error(dlerror());
-		if((this->destroyContextSound = (void(*)(IsoundLib *))dlsym(dlHandleSound, "destroyContext")) == NULL)
-			throw std::runtime_error(dlerror());
-	}
-	catch(std::exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-		exit(EXIT_FAILURE);
-	}
-	currentlibsound = this->initContextSound(volume);
-}
-
 
 void	Game::initLib(const char *lib)
 {
@@ -132,11 +106,6 @@ void	Game::compute(Action::Enum action) {
 	if (gameFrameTimer->frameNumber % 900 == 0)
 		if((gameSpeed -= 1) == 0)
 			gameSpeed = 1;
-	if(action == Action::SOUND)
-	{
-		volume = !volume;
-		this->currentlibsound->playSound(SoundAction::TOGGLE_SOUND);
-	}
 	if(action == Action::LEFT || action == Action::RIGHT || action == Action::LIB1|| action == Action::LIB2|| action == Action::LIB3)
 		this->action = action;
 	if(gameOver && action == Action::RESTART)
@@ -164,13 +133,9 @@ void	Game::display()
 
 bool	Game::checkCollisions() {
 	if (checkWallCollision() || checkSnakeCollision())
-	{
-		currentlibsound->playSound(SoundAction::DEATH);
 		return true;
-	}
 	if (checkFoodCollision()) {
 		foodContactFlag = true;
-		currentlibsound->playSound(SoundAction::EAT);
 		if (static_cast<int>(snake.size()) < (mapSizeX * mapSizeY - 1))
 			generateFood();
 	}
@@ -216,9 +181,6 @@ void	Game::catchLibChange(Action::Enum action)
 		if (std::strcmp(currentlib->toString(), lib))
 		{
 			destroyContext(currentlib);
-			destroyContextSound(currentlibsound);
-			initLibSound(libsound1);
-			currentlibsound->playSound(SoundAction::MUSIC);
 			initLib(lib);
 
 			usleep(1500000);
