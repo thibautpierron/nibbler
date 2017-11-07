@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 11:40:15 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:19:10 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[
 	foodContactFlag = false;
 	gameOver = false;
 
-	initLib(lib1);
+	initLib(lib3);
 	initSnake();
 	generateFood();
 	generateFood();
@@ -116,8 +116,11 @@ void	Game::compute(Action::Enum action) {
 		getNextMoveDirection(this->action);
 		catchLibChange(this->action);
 		if(!gameOver) {
+			std::deque<Vec2> previousSnake = snake;
 			moveSnake();
 			gameOver = checkCollisions();
+			if (gameOver)
+				snake = previousSnake;
 		}
 		this->action = Action::NONE;
 	}
@@ -182,8 +185,6 @@ void	Game::catchLibChange(Action::Enum action)
 		{
 			destroyContext(currentlib);
 			initLib(lib);
-
-			usleep(1500000);
 		}
 	}
 }

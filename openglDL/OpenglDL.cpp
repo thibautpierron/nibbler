@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/19 13:18:28 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 11:40:12 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:04:16 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool game
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    if (gameOver) {
+        this->glString->renderText("GAME OVER",
+                                    (WINDOW_SIZE_X - 9 * 48) / 2, (WINDOW_SIZE_Y + 48) / 2,
+                                    glm::vec3(0.2f, 0.4f, 1.f));
+
+        SDL_GL_SwapWindow(win);
+        return;
+    }
     this->food = food;
     this->snake = snake;
     
@@ -64,10 +72,10 @@ void	OpenglDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool game
     
     drawFood();
     
-    if (gameOver)
-        this->glString->renderText("GAME OVER",
-                                    (WINDOW_SIZE_X - 9 * 48) / 2, (WINDOW_SIZE_Y + 48) / 2,
-                                    glm::vec3(0.2f, 0.4f, 1.f));
+    // if (gameOver)
+    //     this->glString->renderText("GAME OVER",
+    //                                 (WINDOW_SIZE_X - 9 * 48) / 2, (WINDOW_SIZE_Y + 48) / 2,
+    //                                 glm::vec3(0.2f, 0.4f, 1.f));
     
 	SDL_GL_SwapWindow(win);
 }
@@ -104,13 +112,13 @@ void	OpenglDL::initGL() {
 }
 
 void    OpenglDL::initScenery() {
-    for(int i = -1; i <= mapSizeX; i++) {
-        scenery.push_back(Vec2(i, -2));
-        scenery.push_back(Vec2(i, mapSizeY + 1));
+    for(int i = -1; i < mapSizeX; i++) {
+        scenery.push_back(Vec2(i, -1));
+        scenery.push_back(Vec2(i, mapSizeY));
     }
-    for(int i = -1; i <= mapSizeY; i++) {
-        scenery.push_back(Vec2(-2, i));
-        scenery.push_back(Vec2(mapSizeX + 1, i));
+    for(int i = -1; i < mapSizeY + 1; i++) {
+        scenery.push_back(Vec2(-1, i));
+        scenery.push_back(Vec2(mapSizeX, i));
     }
 }
 
@@ -167,8 +175,8 @@ void        OpenglDL::drawScenery() {
     }
 
     glm::mat4 transform = glm::mat4();
-    transform = glm::translate(transform, glm::vec3(mapSizeX, -1.f, mapSizeY));
-    transform = glm::scale(transform, glm::vec3(mapSizeX + 3, 0.5f, mapSizeY + 3));
+    transform = glm::translate(transform, glm::vec3(mapSizeX, -1.5f, mapSizeY));
+    transform = glm::scale(transform, glm::vec3(mapSizeX + 1, 0.5f, mapSizeY + 1));
     data.push_back(transform);
 
     shader->use();

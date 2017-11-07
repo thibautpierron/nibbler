@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 09:56:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/06 10:15:59 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:06:26 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ GLString::GLString() {
 }
 
 GLString::~GLString() {
+	GLString::characters.clear();
 	delete this->shader;
 }
 
