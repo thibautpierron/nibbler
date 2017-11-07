@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 10:46:04 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:33:54 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ TwoDDL::~TwoDDL() {
     SDL_Quit();
 
 	return;
+}
+
+TwoDDL::TwoDDL(TwoDDL const & src) {
+    *this = src;
+    return;
+}
+
+TwoDDL & TwoDDL::operator=(TwoDDL const & rhs) {
+	if (this != &rhs)
+        ;
+    return *this;
 }
 
 void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver) {

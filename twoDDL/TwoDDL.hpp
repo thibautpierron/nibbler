@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/03 11:46:44 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:33:36 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ class TwoDDL : public IgraphLib {
 	public:
 		TwoDDL(int, int);
 		virtual ~TwoDDL();
+		TwoDDL(TwoDDL const & src);
+		TwoDDL & operator=(TwoDDL const & rhs);
 
 		void					display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOver);
 		virtual Action::Enum	eventManager();

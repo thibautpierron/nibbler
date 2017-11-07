@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:09:46 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 14:19:10 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:32:56 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ Game::Game(int mapSizeX, int mapSizeY, const char *libnames[3]) : lib1(libnames[
 Game::~Game() {
 	destroyContext(currentlib);
 	dlclose(dlHandle);
+}
+
+Game::Game(Game const & src) {
+	*this = src;
+	return;
+}
+
+Game & Game::operator=( Game const &rhs) {
+	if (this != &rhs)
+		;
+	return *this;
 }
 
 void	Game::restart() {

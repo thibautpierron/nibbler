@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/20 13:04:49 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 11:37:07 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 14:33:09 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ enum Direction { NORTH , EAST, SOUTH, WEST };
 class Game {
 	public:
 		Game(int, int, const char *tab[3]);
-		~Game();
+		virtual ~Game();
+		Game(Game const &);
+		Game & operator=( Game const & );
 
 		std::vector<Vec2> 	getFood() const;
 		std::deque<Vec2> 	getSnake() const;
 		Action::Enum		eventManager();
 		void				compute(Action::Enum action);
 		void				display();
-		
 		
 	private:
 		Game();

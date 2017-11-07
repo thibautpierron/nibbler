@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   frameTimerClass.h                                  :+:      :+:    :+:   */
+/*   frameTimer.class.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdexheim <fdexheim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/08 13:43:00 by fdexheim           #+#    #+#            */
-/*   Updated: 2017/10/06 20:00:25 by fdexheim         ###   ########.fr       */
+/*   Created: 2017/09/08 13:43:00 by fdexheim          #+#    #+#             */
+/*   Updated: 2017/11/07 14:27:14 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ class			frameTimer
 public:
 	frameTimer();
 	frameTimer(float fpsInit);
-	~frameTimer();
+	virtual ~frameTimer();
 	frameTimer(frameTimer const & src);
 
 	frameTimer &		operator=(frameTimer const & src);
 
 	void				updateTimeBeginningLoop();
-	void				updateTimeEndLoop(); // stalls if necessary
+	void				updateTimeEndLoop();
 
 	float				fps;
 	clock_t				frameTime;
