@@ -6,7 +6,7 @@
 /*   By: tpierron <tpierron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 11:20:23 by tpierron          #+#    #+#             */
-/*   Updated: 2017/11/07 10:36:01 by tpierron         ###   ########.fr       */
+/*   Updated: 2017/11/07 10:46:04 by tpierron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	TwoDDL::display(std::vector<Vec2> food, std::deque<Vec2> snake, bool gameOv
     
     if (gameOver) {
         SDL_RenderCopy(renderer, fontText, NULL, &fontRect);
-        // SDL_RenderPresent(renderer);
-        // return;
     }
     
     SDL_SetRenderDrawColor( renderer, 150, 150, 150, 255 );
